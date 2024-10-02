@@ -11,7 +11,7 @@ class Recipe(db.Model):
     name = db.Column(db.String(40), nullable=False)
     description = db.Column(db.String(4000), nullable=False)
     img = db.Column(db.String(40))
-    userId = db.Column(
+    user_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
 
@@ -24,17 +24,17 @@ class Recipe(db.Model):
             "name": self.name,
             "description": self.description,
             "img": self.img,
-            "userId": self.userId,
+            "user_id": self.user_id,
         }
 
     def to_dict(self):
-        ingredients = {
-            ingredient.id: ingredient.to_dict_simple()
+        ingredients = [
+            {
+                **ingredient.ingredient.to_dict_simple(),
+                "amount_needed": ingredient.amount_needed,
+            }
             for ingredient in self.ingredients
-        }
-
-        # for amount in self.amounts:
-        #     ingredients[amount.ingredient_id]["amount_needed"] = amount.amount_needed
+        ]
 
         return {
             **self.to_dict_simple(),

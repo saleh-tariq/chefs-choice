@@ -7,7 +7,7 @@ salt = Ingredient(
     amount_available="10.75",
     unit_of_measurement="cups",
     img="https://assets.clevelandclinic.org/transform/1dbde386-78f5-41ad-8103-f8463950b0ea/spoonful-salt-sitting-tabletop-1051727580",
-    userId=1,
+    user_id=1,
 )
 pepper = Ingredient(
     name="Pepper",
@@ -15,7 +15,7 @@ pepper = Ingredient(
     amount_available="3.92",
     unit_of_measurement="cups",
     img="https://i5.walmartimages.com/asr/275e080a-321f-4214-9d1c-9695abdbcad5.5bd08980ff6bb69eb26247026db37570.jpeg",
-    userId=1,
+    user_id=1,
 )
 eggs = Ingredient(
     name="Eggs",
@@ -23,7 +23,7 @@ eggs = Ingredient(
     amount_available=48,
     unit_of_measurement="eggs",
     img="https://www.shadygrovefertility.com/wp-content/uploads/2023/07/Egg-supply-blog.png",
-    userId=1,
+    user_id=1,
 )
 rice_krispies = Ingredient(
     name="Rice Krispies",
@@ -31,7 +31,7 @@ rice_krispies = Ingredient(
     amount_available=3,
     unit_of_measurement="boxes",
     img="https://m.media-amazon.com/images/I/91laxLarjYL._AC_UF894,1000_QL80_.jpg",
-    userId=1,
+    user_id=1,
 )
 marshmallows = Ingredient(
     name="Marshmallows",
@@ -39,7 +39,7 @@ marshmallows = Ingredient(
     amount_available=5,
     unit_of_measurement="cups",
     img="https://nuts.com/images/rackcdn/ed910ae2d60f0d25bcb8-80550f96b5feb12604f4f720bfefb46d.ssl.cf1.rackcdn.com/09669a3bdb119241-XKMdPBRT-large.jpg",
-    userId=1,
+    user_id=1,
 )
 butter = Ingredient(
     name="Butter",
@@ -47,7 +47,7 @@ butter = Ingredient(
     amount_available=7,
     unit_of_measurement="sticks",
     img="https://www.realsimple.com/thmb/VvdPHiBwtcQgPl8MiRbOjSjNo4g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/freeze-butter-GettyImages-466938239-b386cf1b961642089337ab851e40a87e.jpg",
-    userId=1,
+    user_id=1,
 )
 potatoes = Ingredient(
     name="Potatoes",
@@ -55,7 +55,7 @@ potatoes = Ingredient(
     amount_available=500,
     unit_of_measurement="potats",
     img="https://131299103.cdn6.editmysite.com/uploads/1/3/1/2/131299103/s620857546626214343_p354_i1_w2560.jpeg",
-    userId=1,
+    user_id=1,
 )
 lemon_juice = Ingredient(
     name="Lemon Juice",
@@ -63,7 +63,7 @@ lemon_juice = Ingredient(
     amount_available=4,
     unit_of_measurement="cups",
     img="https://i5.walmartimages.com/seo/ReaLemon-100-Lemon-Juice-2-48-oz-Bottles_cc77f650-0272-4c90-a042-b3a8cd3b0b99.83b27bbbc58da7faaf534cccc197e06d.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
-    userId=1,
+    user_id=1,
 )
 tuna = Ingredient(
     name="Tuna",
@@ -71,7 +71,7 @@ tuna = Ingredient(
     amount_available=30,
     unit_of_measurement="cans",
     img="https://m.media-amazon.com/images/I/61gYUL02VvL._AC_UF894,1000_QL80_.jpg",
-    userId=1,
+    user_id=1,
 )
 cheese_singles = Ingredient(
     name="Cheese Singles",
@@ -79,7 +79,7 @@ cheese_singles = Ingredient(
     amount_available=400,
     unit_of_measurement="singles",
     img="https://m.media-amazon.com/images/I/41uKz1OUlsL._AC_UF894,1000_QL80_.jpg",
-    userId=1,
+    user_id=1,
 )
 
 

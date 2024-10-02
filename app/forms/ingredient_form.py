@@ -1,9 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, IntegerField, FloatField
 from wtforms.validators import DataRequired
 
 
 class IngredientForm(FlaskForm):
-    username = StringField("username", validators=[DataRequired()])
-    email = StringField("email", validators=[DataRequired()])
-    password = StringField("password", validators=[DataRequired()])
+    name = StringField("name", validators=[DataRequired()])
+    price_per_unit = IntegerField("price_per_unit")
+    amount_available = FloatField("amount_available", validators=[DataRequired()])
+    unit_of_measurement = StringField(
+        "unit_of_measurement", validators=[DataRequired()]
+    )
+    img = StringField("img")
