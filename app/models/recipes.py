@@ -16,7 +16,9 @@ class Recipe(db.Model):
     )
 
     user = db.relationship("User", back_populates="recipes")
-    ingredients = db.relationship("RecipeIngredients", back_populates="recipe")
+    ingredients = db.relationship(
+        "RecipeIngredients", back_populates="recipe", cascade="all, delete-orphan"
+    )
 
     def to_dict_simple(self):
         return {
