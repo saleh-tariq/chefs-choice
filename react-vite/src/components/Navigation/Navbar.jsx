@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from 'react-icons/fa';
+import { IoIosMenu } from "react-icons/io";
 import { thunkLogout } from "../../redux/session";
-import OpenModalMenuItem from "./OpenModalMenuItem";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
 
-function ProfileButton() {
+function NavBar() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
@@ -41,37 +39,32 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
-      </button>
+      {showMenu || !user || (
+        <button onClick={toggleMenu} className="nav-button dark">
+          <IoIosMenu />
+        </button>
+      )}
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <div className={"side-bar dark"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
+              <p>{user.username}</p>
+              <p>{user.email}</p>
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">Home</NavLink>
+              <button onClick={logout} className="dark-secondary">
+                Log Out
+              </button>
             </>
           ) : (
-            <>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </>
+            <></>
           )}
-        </ul>
+        </div>
       )}
     </>
   );
 }
 
-export default ProfileButton;
+export default NavBar;
