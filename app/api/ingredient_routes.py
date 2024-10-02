@@ -70,3 +70,31 @@ def post_new_ingredient():
         return {"errors": form.errors}, 400
 
     return
+
+
+@ingredient_routes.route("/<int:ingredient_id>", methods=["PUT"])
+@login_required
+def put_template(ingredient_id):
+    """
+    Edits an existing ingredient
+    """
+    ingredient = Ingredient.query.get(ingredient_id)
+    if not ingredient:
+        return {"errors": {"message": "Ingredient not found"}}, 404
+
+    if not ingredient.user_id == current_user.id:
+        return {"errors": {"message": "Unauthorized"}}, 401
+
+    form = IngredientForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        form.populate_obj(ingredient)
+        ingredient.user_id = current_user.to_dict()["id"]
+
+        db.session.add(ingredient)
+        db.session.commit()
+
+        return ingredient.to_dict_simple(), 201
+
+    return
