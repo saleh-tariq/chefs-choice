@@ -8,12 +8,11 @@
 }
 
 .side-bar {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   height: 100%;
   width: 200px;
-  padding: 5px;
   animation: open 0.15s linear 0s 1 normal forwards;
   display: flex;
   flex-direction: column;
@@ -33,9 +32,25 @@
   border-radius: 12.5px;
   border-width: 1px;
   border-style: solid;
-  position: absolute;
+  position: fixed;
   top: 5px;
   left: 5px;
+}
+
+.nav-button-open {
+  width: 25px;
+  height: 25px;
+  padding: 0px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12.5px;
+  border-width: 1px;
+  border-style: solid;
+  position: fixed;
+  top: 5px;
+  left: 205px;
 }
 
 .nav-button > * {

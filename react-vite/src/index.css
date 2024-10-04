@@ -1,76 +1,83 @@
 /* TODO: Add sitewide styles */
 .dark {
-  background-color: #3f1d38;
-  color: #a2678a;
-  border-color: #a2678a;
+  background-color: #2d2424;
+  color: #e1c398;
+  border-color: #e1c398;
 }
 
 .dark-text {
   text-decoration: none;
-  color: #a2678a;
+  color: #e1c398;
 }
 
 .dark-primary {
-  background-color: #a2678a;
-  color: #3f1d38;
-  border-color: #3f1d38;
+  background-color: #e1c398;
+  color: #2d2424;
+  border-color: #2d2424;
 }
 
 .dark-primary-text {
   text-decoration: none;
-  color: #a2678a;
+  color: #e1c398;
 }
 
 .dark-secondary {
-  background-color: #e19898;
-  color: #3f1d38;
-  border-color: #3f1d38;
+  background-color: #5c3e2e;
+  color: #e1c398;
+  border-color: #e1c398;
 }
 
 .dark-secondary-text {
   text-decoration: none;
-  color: #e19898;
+  color: #5c3e2e;
 }
 
 .dark-accent {
-  background-color: #4c3c77;
-  color: #a2678a;
-  border-color: #a2678a;
+  background-color: #b75c38;
+  color: #e1c398;
+  border-color: #e1c398;
 }
 
 .dark-accent-text {
   text-decoration: underline;
-  color: #4c3c77;
+  color: #b75c38;
 }
 
 .dark-accent-text:hover {
   cursor: pointer;
-  background-color: #4c3c77;
-  color: #a2678a;
-  border-color: #a2678a;
+  background-color: #b75c38;
+  color: #e1c398;
+  border-color: #e1c398;
   transition: 0.25s;
 }
 
 .light {
-  background-color: #e2c0db;
-  color: #985d80;
-  border-color: #985d80;
+  background-color: #dbd2d2;
+  color: #67481e;
+  border-color: #67481e;
 }
 
 .light-primary {
-  background-color: #985d80;
-  color: #e2c0db;
-  border-color: #e2c0db;
+  background-color: #67481e;
+  color: #dbd2d2;
+  border-color: #dbd2d2;
 }
 
 .light-secondary {
-  background-color: #671e1e;
-  color: #e2c0db;
-  border-color: #e2c0db;
+  background-color: #d1b3a3;
+  color: #67481e;
+  border-color: #67481e;
 }
 
 .light-accent {
-  background-color: #9888c3;
-  color: #a2678a;
-  border-color: #a2678a;
+  background-color: #c76c48;
+  color: #e1c398;
+  border-color: #e1c398;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }

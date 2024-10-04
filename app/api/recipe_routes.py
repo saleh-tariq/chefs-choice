@@ -15,7 +15,7 @@ def get_user_recipes():
     Get all recipes made by the logged in user
     """
     user = current_user.to_dict()
-    recipes = Recipe.query.filter(Recipe.userId == user["id"]).all()
+    recipes = Recipe.query.filter(Recipe.user_id == user["id"]).all()
     return {"Recipes": [recipe.to_dict_simple() for recipe in recipes]}
 
 

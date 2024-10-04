@@ -14,7 +14,7 @@ def get_user_ingredients():
     Get all ingredients made by the logged in user
     """
     user = current_user.to_dict()
-    ingredients = Ingredient.query.filter(Ingredient.userId == user["id"]).all()
+    ingredients = Ingredient.query.filter(Ingredient.user_id == user["id"]).all()
     return {"Ingredients": [ingredient.to_dict_simple() for ingredient in ingredients]}
 
 

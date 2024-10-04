@@ -39,8 +39,11 @@ function NavBar() {
 
   return (
     <>
-      {showMenu || !user || (
-        <button onClick={toggleMenu} className="nav-button dark">
+      {!user || (
+        <button
+          onClick={toggleMenu}
+          className={showMenu ? "nav-button-open dark" : "nav-button dark"}
+        >
           <IoIosMenu />
         </button>
       )}
@@ -50,10 +53,18 @@ function NavBar() {
             <>
               <p>{user.username}</p>
               <p>{user.email}</p>
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" className={"dark-accent-text"}>
+                Home
+              </NavLink>
+              <NavLink to="/" className={"dark-accent-text"}>
+                Home
+              </NavLink>
+              <NavLink to="/" className={"dark-accent-text"}>
+                Home
+              </NavLink>
+              <NavLink to="/" className={"dark-accent-text"}>
+                Home
+              </NavLink>
               <button onClick={logout} className="dark-secondary">
                 Log Out
               </button>
