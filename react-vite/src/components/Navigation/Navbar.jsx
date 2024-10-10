@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IoIosMenu } from "react-icons/io";
+import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { thunkLogout } from "../../redux/session";
 import { NavLink } from "react-router-dom";
 
@@ -42,38 +42,42 @@ function NavBar() {
       {!user || (
         <button
           onClick={toggleMenu}
-          className={showMenu ? "nav-button-open dark" : "nav-button dark"}
+          className={
+            showMenu ? "nav-button-open nav-button dark" : "nav-button dark"
+          }
         >
-          <IoIosMenu />
+          {showMenu ? <IoIosClose /> : <IoIosMenu />}
         </button>
       )}
-      {showMenu && (
-        <div className={"side-bar dark"} ref={ulRef}>
-          {user ? (
-            <>
-              <p>{user.username}</p>
-              <p>{user.email}</p>
-              <NavLink to="/" className={"dark-accent-text"}>
-                Home
-              </NavLink>
-              <NavLink to="/" className={"dark-accent-text"}>
-                Home
-              </NavLink>
-              <NavLink to="/" className={"dark-accent-text"}>
-                Home
-              </NavLink>
-              <NavLink to="/" className={"dark-accent-text"}>
-                Home
-              </NavLink>
-              <button onClick={logout} className="dark-secondary">
-                Log Out
-              </button>
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-      )}
+
+      <div
+        className={showMenu ? "side-bar side-bar-open dark" : "side-bar dark"}
+        ref={ulRef}
+      >
+        {user ? (
+          <>
+            <p>{user.username}</p>
+            <p>{user.email}</p>
+            <NavLink to="/" className={"dark-accent-text"}>
+              Home
+            </NavLink>
+            <NavLink to="/ingredients" className={"dark-accent-text"}>
+              My Ingredients
+            </NavLink>
+            <NavLink to="/" className={"dark-accent-text"}>
+              Home
+            </NavLink>
+            <NavLink to="/" className={"dark-accent-text"}>
+              Home
+            </NavLink>
+            <button onClick={logout} className="dark-secondary">
+              Log Out
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   );
 }

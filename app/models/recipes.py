@@ -19,6 +19,9 @@ class Recipe(db.Model):
     ingredients = db.relationship(
         "RecipeIngredients", back_populates="recipe", cascade="all, delete-orphan"
     )
+    steps = db.relationship(
+        'Step', back_populates='recipe', cascade="all, delete-orphan"
+    )
 
     def to_dict_simple(self):
         return {
@@ -42,3 +45,12 @@ class Recipe(db.Model):
             **self.to_dict_simple(),
             "Ingredients": ingredients,
         }
+    
+    def is_available(self):
+        for ingredient in self.ingredients:
+            if ingredient.amount_needed > ingredient.ingredient.amount_available:
+                return False
+        return True
+    
+    def missing_ingredients(self):
+        return [{"Ingredient": ingredient.ingredient.to_dict_simple(), "amount_needed": ingredient.amount_needed} for ingredient in self.ingredients if ingredient.amount_needed > ingredient.ingredient.amount_available]

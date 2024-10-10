@@ -19,6 +19,28 @@ def get_user_recipes():
     return {"Recipes": [recipe.to_dict_simple() for recipe in recipes]}
 
 
+@recipe_routes.route("/available")
+@login_required
+def get_available_recipes():
+    """
+    Get all recipes which the user has the ingredients to make
+    """
+    user = current_user.to_dict()
+    recipes = Recipe.query.filter(Recipe.user_id == user["id"]).all()
+    return {"Recipes": [recipe.to_dict_simple() for recipe in recipes if recipe.is_available()]}
+
+
+@recipe_routes.route("/unavailable")
+@login_required
+def get_unavailable_recipes():
+    """
+    Get all recipes which the user doesnt have the ingredients to make
+    """
+    user = current_user.to_dict()
+    recipes = Recipe.query.filter(Recipe.user_id == user["id"]).all()
+    return {"Recipes": [recipe.to_dict_simple() for recipe in recipes if not recipe.is_available()]}
+
+
 @recipe_routes.route("/<int:recipe_id>")
 @login_required
 def get_recipe_by_id(recipe_id):
@@ -27,6 +49,16 @@ def get_recipe_by_id(recipe_id):
     """
     recipe = Recipe.query.get(recipe_id)
     return recipe.to_dict()
+
+
+@recipe_routes.route("/<int:recipe_id>")
+@login_required
+def get_needed_ingredients(recipe_id):
+    """
+    Get details of a specific recipe by its ID
+    """
+    recipe = Recipe.query.get(recipe_id)
+    return recipe.missing_ingredients()
 
 
 @recipe_routes.route("/<int:recipe_id>", methods=["DELETE"])

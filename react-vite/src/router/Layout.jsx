@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
@@ -19,8 +19,13 @@ export default function Layout() {
     <>
       <ModalProvider>
         <Navigation />
-        {isLoaded && user ? <Outlet /> : <LoginAndSignupPage />}
+        {isLoaded && (user ? <Outlet /> : <LoginAndSignupPage />)}
         <Modal />
+        <div id="footer" className="dark">
+          <NavLink to={"/"} id="logo" className="dark">
+            Chef's Choice
+          </NavLink>
+        </div>
       </ModalProvider>
     </>
   );

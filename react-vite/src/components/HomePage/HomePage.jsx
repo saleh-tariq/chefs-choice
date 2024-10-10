@@ -6,11 +6,16 @@ function HomePage() {
   const navigate = useNavigate();
   return (
     <>
-      {Recipes.map((recipe) => (
-        <div onClick={() => navigate("/recipes/" + recipe.id)}>
-          <h3>{recipe.name}</h3>
-        </div>
-      ))}
+      <h2>Whats on the menu today?</h2>
+      {Recipes.length ? (
+        Recipes.map((recipe) => (
+          <div onClick={() => navigate("/recipes/" + recipe.id)}>
+            <h3>{recipe.name}</h3>
+          </div>
+        ))
+      ) : (
+        <button onClick={() => navigate("/recipes")}>Create new recipes</button>
+      )}
     </>
   );
 }

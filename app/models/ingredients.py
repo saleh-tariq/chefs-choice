@@ -21,6 +21,9 @@ class Ingredient(db.Model):
     recipes = db.relationship(
         "RecipeIngredients", back_populates="ingredient", cascade="all, delete-orphan"
     )
+    steps = db.relationship(
+        "StepIngredients", back_populates="ingredient", cascade="all, delete-orphan"
+    )
     # amounts = db.relationship(add_prefix_for_prod("RecipeIngredients"))
 
     def to_dict_simple(self):

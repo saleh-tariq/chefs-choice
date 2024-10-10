@@ -74,19 +74,26 @@ def post_new_ingredient():
 
 @ingredient_routes.route("/<int:ingredient_id>", methods=["PUT"])
 @login_required
-def put_template(ingredient_id):
+def put_ingredient(ingredient_id):
     """
     Edits an existing ingredient
     """
     ingredient = Ingredient.query.get(ingredient_id)
+    print('\n\n\n\n\n\n\n\n')
     if not ingredient:
         return {"errors": {"message": "Ingredient not found"}}, 404
 
     if not ingredient.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
+    print('------------------')
+    print('\n\n\n\n\n\n\n\n')
+    print('------------------')
     form = IngredientForm()
+    print(form)
+    print('\n\n\n\n\n\n\n\n')
     form["csrf_token"].data = request.cookies["csrf_token"]
+    print(form.data)
 
     if form.validate_on_submit():
         form.populate_obj(ingredient)
@@ -97,4 +104,4 @@ def put_template(ingredient_id):
 
         return ingredient.to_dict_simple(), 201
 
-    return
+    return {"errors" : "unknown origin"}, 418

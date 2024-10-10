@@ -81,3 +81,21 @@
   flex-direction: column;
   width: 100%;
 }
+
+#logo {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 50px;
+}
+
+#footer {
+  height: auto;
+  width: 100%;
+  display: flex;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  margin: 0px;
+  padding: 10px;
+}
