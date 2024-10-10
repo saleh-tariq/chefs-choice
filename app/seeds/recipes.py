@@ -1,4 +1,12 @@
-from app.models import db, Recipe, RecipeIngredients, Step, StepIngredients, Ingredient, environment, SCHEMA
+from app.models import (
+    db,
+    Recipe,
+    Step,
+    StepIngredients,
+    Ingredient,
+    environment,
+    SCHEMA,
+)
 from sqlalchemy.sql import text
 
 rice_crispy_treats = Recipe(
@@ -25,48 +33,45 @@ tuna_melt = Recipe(
 def seed_recipes():
     ## Recipe
     sunny = Recipe(
-    name="Sunny Side Up Eggs",
-    description="Sunny Side Up Eggs LMAOOOO",
-    img="https://thebakermama.com/wp-content/uploads/2021/03/IMG_5169-scaled.jpg",
-    user_id=1,
+        name="Sunny Side Up Eggs",
+        description="Sunny Side Up Eggs LMAOOOO",
+        img="https://thebakermama.com/wp-content/uploads/2021/03/IMG_5169-scaled.jpg",
+        user_id=1,
     )
 
     ## Ingredients
-    sunny_egg = RecipeIngredients(amount_needed=5)
     eggs = Ingredient(
-    name="Eggs",
-    price_per_unit=25,
-    amount_available=48,
-    unit_of_measurement="eggs",
-    img="https://www.shadygrovefertility.com/wp-content/uploads/2023/07/Egg-supply-blog.png",
-    user_id=1,
+        name="Eggs",
+        price_per_unit=25,
+        amount_available=48,
+        unit_of_measurement="eggs",
+        img="https://www.shadygrovefertility.com/wp-content/uploads/2023/07/Egg-supply-blog.png",
+        user_id=1,
     )
-    sunny_egg.ingredient = eggs
-    sunny_butter = RecipeIngredients(amount_needed=0.25)
     butter = Ingredient(
-    name="Butter",
-    price_per_unit=129,
-    amount_available=7,
-    unit_of_measurement="sticks",
-    img="https://www.realsimple.com/thmb/VvdPHiBwtcQgPl8MiRbOjSjNo4g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/freeze-butter-GettyImages-466938239-b386cf1b961642089337ab851e40a87e.jpg",
-    user_id=1,
+        name="Butter",
+        price_per_unit=129,
+        amount_available=7,
+        unit_of_measurement="sticks",
+        img="https://www.realsimple.com/thmb/VvdPHiBwtcQgPl8MiRbOjSjNo4g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/freeze-butter-GettyImages-466938239-b386cf1b961642089337ab851e40a87e.jpg",
+        user_id=1,
     )
-    sunny_butter.ingredient = butter
-    sunny.ingredients.append(sunny_egg)
-    sunny.ingredients.append(sunny_butter)
 
     ## STEPS
-    sunny_step1 = Step(description='First, butter a pan on low heat', seconds=60)
+    sunny_step1 = Step(description="First, butter a pan on low heat", seconds=60)
     sunny_step1_ingred1 = StepIngredients(amount_needed=0.25)
     sunny_step1_ingred1.ingredient = butter
     sunny_step1.ingredients.append(sunny_step1_ingred1)
 
-    sunny_step2 = Step(description='Then, add 5 eggs in and let cook', seconds=240)
+    sunny_step2 = Step(description="Then, add 5 eggs in and let cook", seconds=240)
     sunny_step2_ingred1 = StepIngredients(amount_needed=5)
     sunny_step2_ingred1.ingredient = eggs
     sunny_step2.ingredients.append(sunny_step2_ingred1)
 
-    sunny_step3 = Step(description='Finally, once cooked to your liking, remove the eggs and enjoy', seconds=0)
+    sunny_step3 = Step(
+        description="Finally, once cooked to your liking, remove the eggs and enjoy",
+        seconds=0,
+    )
 
     sunny.steps.append(sunny_step1)
     sunny.steps.append(sunny_step2)
@@ -82,7 +87,6 @@ def seed_recipes():
     )
 
     ## Ingredients
-    stir_fry_vegetables = RecipeIngredients(amount_needed=300)
     bell_pepper = Ingredient(
         name="Bell Pepper",
         price_per_unit=50,
@@ -107,31 +111,9 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/carrot.jpg",
         user_id=1,
     )
-    
-    stir_fry_vegetables.ingredient = bell_pepper
-    stir_fry_vegetables2 = RecipeIngredients(amount_needed=200)
-    stir_fry_vegetables2.ingredient = broccoli
-    stir_fry_vegetables3 = RecipeIngredients(amount_needed=100)
-    stir_fry_vegetables3.ingredient = carrot
-
-    vegetable_stir_fry.ingredients.append(stir_fry_vegetables)
-    vegetable_stir_fry.ingredients.append(stir_fry_vegetables2)
-    vegetable_stir_fry.ingredients.append(stir_fry_vegetables3)
-
-    soy_sauce_ingredient = RecipeIngredients(amount_needed=50)
-    soy_sauce = Ingredient(
-        name="Soy Sauce",
-        price_per_unit=50,
-        amount_available=500,
-        unit_of_measurement="ml",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/soy-sauce.jpg",
-        user_id=1,
-    )
-    soy_sauce_ingredient.ingredient = soy_sauce
-    vegetable_stir_fry.ingredients.append(soy_sauce_ingredient)
 
     ## STEPS
-    stir_fry_step1 = Step(description='Heat oil in a pan over medium heat.', seconds=60)
+    stir_fry_step1 = Step(description="Heat oil in a pan over medium heat.", seconds=60)
     oil = Ingredient(
         name="Vegetable Oil",
         price_per_unit=40,
@@ -144,7 +126,10 @@ def seed_recipes():
     stir_fry_step1_ingred1.ingredient = oil
     stir_fry_step1.ingredients.append(stir_fry_step1_ingred1)
 
-    stir_fry_step2 = Step(description='Add bell pepper, broccoli, and carrot and stir-fry for 5 minutes.', seconds=300)
+    stir_fry_step2 = Step(
+        description="Add bell pepper, broccoli, and carrot and stir-fry for 5 minutes.",
+        seconds=300,
+    )
     stir_fry_step2_ingred1 = StepIngredients(amount_needed=300)
     stir_fry_step2_ingred1.ingredient = bell_pepper
     stir_fry_step2.ingredients.append(stir_fry_step2_ingred1)
@@ -157,7 +142,7 @@ def seed_recipes():
     stir_fry_step2_ingred3.ingredient = carrot
     stir_fry_step2.ingredients.append(stir_fry_step2_ingred3)
 
-    stir_fry_step3 = Step(description='Serve hot with rice.', seconds=0)
+    stir_fry_step3 = Step(description="Serve hot with rice.", seconds=0)
 
     vegetable_stir_fry.steps.append(stir_fry_step1)
     vegetable_stir_fry.steps.append(stir_fry_step2)
@@ -174,7 +159,6 @@ def seed_recipes():
     )
 
     ## Ingredients
-    spaghetti = RecipeIngredients(amount_needed=200)
     spaghetti_ingredient = Ingredient(
         name="Spaghetti",
         price_per_unit=150,
@@ -183,9 +167,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/spaghetti.jpg",
         user_id=1,
     )
-    spaghetti.ingredient = spaghetti_ingredient
 
-    garlic = RecipeIngredients(amount_needed=4)
     garlic_ingredient = Ingredient(
         name="Garlic",
         price_per_unit=20,
@@ -194,9 +176,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/garlic.jpg",
         user_id=1,
     )
-    garlic.ingredient = garlic_ingredient
 
-    olive_oil = RecipeIngredients(amount_needed=50)
     olive_oil_ingredient = Ingredient(
         name="Olive Oil",
         price_per_unit=300,
@@ -205,9 +185,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/olive-oil.jpg",
         user_id=1,
     )
-    olive_oil.ingredient = olive_oil_ingredient
 
-    chili_flakes = RecipeIngredients(amount_needed=5)
     chili_flakes_ingredient = Ingredient(
         name="Red Chili Flakes",
         price_per_unit=15,
@@ -216,20 +194,19 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/red-chili-flakes.jpg",
         user_id=1,
     )
-    chili_flakes.ingredient = chili_flakes_ingredient
-
-    spaghetti_aglio_e_olio.ingredients.append(spaghetti)
-    spaghetti_aglio_e_olio.ingredients.append(garlic)
-    spaghetti_aglio_e_olio.ingredients.append(olive_oil)
-    spaghetti_aglio_e_olio.ingredients.append(chili_flakes)
 
     ## STEPS
-    aglio_e_olio_step1 = Step(description='Boil water and cook spaghetti until al dente.', seconds=600)
+    aglio_e_olio_step1 = Step(
+        description="Boil water and cook spaghetti until al dente.", seconds=600
+    )
     aglio_e_olio_step1_ingred1 = StepIngredients(amount_needed=200)
     aglio_e_olio_step1_ingred1.ingredient = spaghetti_ingredient
     aglio_e_olio_step1.ingredients.append(aglio_e_olio_step1_ingred1)
 
-    aglio_e_olio_step2 = Step(description='In a pan, heat olive oil and sauté garlic until golden.', seconds=120)
+    aglio_e_olio_step2 = Step(
+        description="In a pan, heat olive oil and sauté garlic until golden.",
+        seconds=120,
+    )
     aglio_e_olio_step2_ingred1 = StepIngredients(amount_needed=50)
     aglio_e_olio_step2_ingred1.ingredient = olive_oil_ingredient
     aglio_e_olio_step2.ingredients.append(aglio_e_olio_step2_ingred1)
@@ -238,7 +215,10 @@ def seed_recipes():
     aglio_e_olio_step2_ingred2.ingredient = garlic_ingredient
     aglio_e_olio_step2.ingredients.append(aglio_e_olio_step2_ingred2)
 
-    aglio_e_olio_step3 = Step(description='Add red chili flakes and cooked spaghetti; toss to combine.', seconds=60)
+    aglio_e_olio_step3 = Step(
+        description="Add red chili flakes and cooked spaghetti; toss to combine.",
+        seconds=60,
+    )
     aglio_e_olio_step3_ingred1 = StepIngredients(amount_needed=5)
     aglio_e_olio_step3_ingred1.ingredient = chili_flakes_ingredient
     aglio_e_olio_step3.ingredients.append(aglio_e_olio_step3_ingred1)
@@ -249,7 +229,7 @@ def seed_recipes():
 
     db.session.add(spaghetti_aglio_e_olio)
 
-        ## Recipe
+    ## Recipe
     chicken_curry = Recipe(
         name="Chicken Curry",
         description="A flavorful chicken curry with spices.",
@@ -258,7 +238,6 @@ def seed_recipes():
     )
 
     ## Ingredients
-    chicken = RecipeIngredients(amount_needed=500)
     chicken_ingredient = Ingredient(
         name="Chicken Breast",
         price_per_unit=200,
@@ -267,9 +246,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/chicken.jpg",
         user_id=1,
     )
-    chicken.ingredient = chicken_ingredient
 
-    onion = RecipeIngredients(amount_needed=1)
     onion_ingredient = Ingredient(
         name="Onion",
         price_per_unit=15,
@@ -278,9 +255,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/onion.jpg",
         user_id=1,
     )
-    onion.ingredient = onion_ingredient
 
-    tomato = RecipeIngredients(amount_needed=200)
     tomato_ingredient = Ingredient(
         name="Tomato",
         price_per_unit=10,
@@ -289,9 +264,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/tomato.jpg",
         user_id=1,
     )
-    tomato.ingredient = tomato_ingredient
 
-    curry_powder = RecipeIngredients(amount_needed=20)
     curry_powder_ingredient = Ingredient(
         name="Curry Powder",
         price_per_unit=50,
@@ -300,25 +273,24 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/curry-powder.jpg",
         user_id=1,
     )
-    curry_powder.ingredient = curry_powder_ingredient
-
-    chicken_curry.ingredients.append(chicken)
-    chicken_curry.ingredients.append(onion)
-    chicken_curry.ingredients.append(tomato)
-    chicken_curry.ingredients.append(curry_powder)
 
     ## STEPS
-    curry_step1 = Step(description='Sauté chopped onion until translucent.', seconds=180)
+    curry_step1 = Step(
+        description="Sauté chopped onion until translucent.", seconds=180
+    )
     curry_step1_ingred1 = StepIngredients(amount_needed=1)
     curry_step1_ingred1.ingredient = onion_ingredient
     curry_step1.ingredients.append(curry_step1_ingred1)
 
-    curry_step2 = Step(description='Add chicken and cook until browned.', seconds=300)
+    curry_step2 = Step(description="Add chicken and cook until browned.", seconds=300)
     curry_step2_ingred1 = StepIngredients(amount_needed=500)
     curry_step2_ingred1.ingredient = chicken_ingredient
     curry_step2.ingredients.append(curry_step2_ingred1)
 
-    curry_step3 = Step(description='Add tomato and curry powder; simmer until cooked through.', seconds=600)
+    curry_step3 = Step(
+        description="Add tomato and curry powder; simmer until cooked through.",
+        seconds=600,
+    )
     curry_step3_ingred1 = StepIngredients(amount_needed=200)
     curry_step3_ingred1.ingredient = tomato_ingredient
     curry_step3.ingredients.append(curry_step3_ingred1)
@@ -342,7 +314,6 @@ def seed_recipes():
     )
 
     ## Ingredients
-    mozzarella = RecipeIngredients(amount_needed=250)
     mozzarella_ingredient = Ingredient(
         name="Fresh Mozzarella",
         price_per_unit=300,
@@ -351,9 +322,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/mozzarella.jpg",
         user_id=1,
     )
-    mozzarella.ingredient = mozzarella_ingredient
 
-    tomato = RecipeIngredients(amount_needed=300)
     tomato_ingredient = Ingredient(
         name="Tomato",
         price_per_unit=10,
@@ -362,9 +331,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/tomato.jpg",
         user_id=1,
     )
-    tomato.ingredient = tomato_ingredient
 
-    basil = RecipeIngredients(amount_needed=10)
     basil_ingredient = Ingredient(
         name="Fresh Basil",
         price_per_unit=50,
@@ -373,9 +340,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/basil.jpg",
         user_id=1,
     )
-    basil.ingredient = basil_ingredient
 
-    olive_oil = RecipeIngredients(amount_needed=20)
     olive_oil_ingredient = Ingredient(
         name="Olive Oil",
         price_per_unit=300,
@@ -384,15 +349,9 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/olive-oil.jpg",
         user_id=1,
     )
-    olive_oil.ingredient = olive_oil_ingredient
-
-    caprese_salad.ingredients.append(mozzarella)
-    caprese_salad.ingredients.append(tomato)
-    caprese_salad.ingredients.append(basil)
-    caprese_salad.ingredients.append(olive_oil)
 
     ## STEPS
-    caprese_step1 = Step(description='Slice mozzarella and tomatoes.', seconds=120)
+    caprese_step1 = Step(description="Slice mozzarella and tomatoes.", seconds=120)
     caprese_step1_ingred1 = StepIngredients(amount_needed=250)
     caprese_step1_ingred1.ingredient = mozzarella_ingredient
     caprese_step1.ingredients.append(caprese_step1_ingred1)
@@ -401,12 +360,14 @@ def seed_recipes():
     caprese_step1_ingred2.ingredient = tomato_ingredient
     caprese_step1.ingredients.append(caprese_step1_ingred2)
 
-    caprese_step2 = Step(description='Layer mozzarella, tomato, and basil on a plate.', seconds=60)
+    caprese_step2 = Step(
+        description="Layer mozzarella, tomato, and basil on a plate.", seconds=60
+    )
     caprese_step2_ingred1 = StepIngredients(amount_needed=10)
     caprese_step2_ingred1.ingredient = basil_ingredient
     caprese_step2.ingredients.append(caprese_step2_ingred1)
 
-    caprese_step3 = Step(description='Drizzle with olive oil and serve.', seconds=30)
+    caprese_step3 = Step(description="Drizzle with olive oil and serve.", seconds=30)
     caprese_step3_ingred1 = StepIngredients(amount_needed=20)
     caprese_step3_ingred1.ingredient = olive_oil_ingredient
     caprese_step3.ingredients.append(caprese_step3_ingred1)
@@ -426,10 +387,7 @@ def seed_recipes():
     )
 
     ## Ingredients
-    omelette_eggs = RecipeIngredients(amount_needed=3)
-    omelette_eggs.ingredient = eggs  # Reusing eggs
 
-    cheese = RecipeIngredients(amount_needed=50)
     cheese_ingredient = Ingredient(
         name="Cheddar Cheese",
         price_per_unit=200,
@@ -438,9 +396,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/cheddar.jpg",
         user_id=1,
     )
-    cheese.ingredient = cheese_ingredient
 
-    herbs = RecipeIngredients(amount_needed=5)
     herbs_ingredient = Ingredient(
         name="Fresh Herbs",
         price_per_unit=50,
@@ -449,24 +405,23 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/herbs.jpg",
         user_id=1,
     )
-    herbs.ingredient = herbs_ingredient
-
-    omelette.ingredients.append(omelette_eggs)
-    omelette.ingredients.append(cheese)
-    omelette.ingredients.append(herbs)
 
     ## STEPS
-    omelette_step1 = Step(description='Whisk eggs in a bowl.', seconds=30)
+    omelette_step1 = Step(description="Whisk eggs in a bowl.", seconds=30)
     omelette_step1_ingred1 = StepIngredients(amount_needed=3)
     omelette_step1_ingred1.ingredient = eggs
     omelette_step1.ingredients.append(omelette_step1_ingred1)
 
-    omelette_step2 = Step(description='Heat butter in a pan, pour in eggs, and cook.', seconds=300)
+    omelette_step2 = Step(
+        description="Heat butter in a pan, pour in eggs, and cook.", seconds=300
+    )
     omelette_step2_ingred1 = StepIngredients(amount_needed=0.25)
     omelette_step2_ingred1.ingredient = butter  # Reusing butter
     omelette_step2.ingredients.append(omelette_step2_ingred1)
 
-    omelette_step3 = Step(description='Add cheese and herbs; fold and serve.', seconds=60)
+    omelette_step3 = Step(
+        description="Add cheese and herbs; fold and serve.", seconds=60
+    )
     omelette_step3_ingred1 = StepIngredients(amount_needed=50)
     omelette_step3_ingred1.ingredient = cheese_ingredient
     omelette_step3.ingredients.append(omelette_step3_ingred1)
@@ -490,7 +445,6 @@ def seed_recipes():
     )
 
     ## Ingredients
-    rice = RecipeIngredients(amount_needed=200)
     rice_ingredient = Ingredient(
         name="Cooked Rice",
         price_per_unit=50,
@@ -499,9 +453,7 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/rice.jpg",
         user_id=1,
     )
-    rice.ingredient = rice_ingredient
 
-    mixed_vegetables = RecipeIngredients(amount_needed=100)
     mixed_vegetables_ingredient = Ingredient(
         name="Mixed Vegetables",
         price_per_unit=80,
@@ -510,27 +462,23 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/vegetables.jpg",
         user_id=1,
     )
-    mixed_vegetables.ingredient = mixed_vegetables_ingredient
-
-    fried_rice_eggs = RecipeIngredients(amount_needed=2)
-    fried_rice_eggs.ingredient = eggs  # Reusing eggs
-
-    fried_rice.ingredients.append(rice)
-    fried_rice.ingredients.append(mixed_vegetables)
-    fried_rice.ingredients.append(fried_rice_eggs)
 
     ## STEPS
-    fried_rice_step1 = Step(description='Heat oil in a pan and add cooked rice.', seconds=120)
+    fried_rice_step1 = Step(
+        description="Heat oil in a pan and add cooked rice.", seconds=120
+    )
     fried_rice_step1_ingred1 = StepIngredients(amount_needed=200)
     fried_rice_step1_ingred1.ingredient = rice_ingredient
     fried_rice_step1.ingredients.append(fried_rice_step1_ingred1)
 
-    fried_rice_step2 = Step(description='Add mixed vegetables and sauté.', seconds=180)
+    fried_rice_step2 = Step(description="Add mixed vegetables and sauté.", seconds=180)
     fried_rice_step2_ingred1 = StepIngredients(amount_needed=100)
     fried_rice_step2_ingred1.ingredient = mixed_vegetables_ingredient
     fried_rice_step2.ingredients.append(fried_rice_step2_ingred1)
 
-    fried_rice_step3 = Step(description='Add beaten eggs and stir until cooked.', seconds=300)
+    fried_rice_step3 = Step(
+        description="Add beaten eggs and stir until cooked.", seconds=300
+    )
     fried_rice_step3_ingred1 = StepIngredients(amount_needed=2)
     fried_rice_step3_ingred1.ingredient = eggs  # Reusing eggs
     fried_rice_step3.ingredients.append(fried_rice_step3_ingred1)
@@ -550,10 +498,7 @@ def seed_recipes():
     )
 
     ## Ingredients
-    caprese_tomatoes = RecipeIngredients(amount_needed=200)
-    caprese_tomatoes.ingredient = tomato_ingredient  # Reusing tomatoes
 
-    mozzarella = RecipeIngredients(amount_needed=150)
     mozzarella_ingredient = Ingredient(
         name="Mozzarella Cheese",
         price_per_unit=250,
@@ -562,26 +507,18 @@ def seed_recipes():
         img="https://www.acouplecooks.com/wp-content/uploads/2020/05/mozzarella.jpg",
         user_id=1,
     )
-    mozzarella.ingredient = mozzarella_ingredient
-
-    caprese_basil = RecipeIngredients(amount_needed=10)
-    caprese_basil.ingredient = basil_ingredient  # Reusing basil
-
-    olive_oil_caprese = RecipeIngredients(amount_needed=20)
-    olive_oil_caprese.ingredient = olive_oil_ingredient  # Reusing olive oil
-
-    caprese_salad.ingredients.append(caprese_tomatoes)
-    caprese_salad.ingredients.append(mozzarella)
-    caprese_salad.ingredients.append(caprese_basil)
-    caprese_salad.ingredients.append(olive_oil_caprese)
 
     ## STEPS
-    caprese_step1 = Step(description='Slice tomatoes and mozzarella cheese.', seconds=120)
+    caprese_step1 = Step(
+        description="Slice tomatoes and mozzarella cheese.", seconds=120
+    )
     caprese_step1_ingred1 = StepIngredients(amount_needed=200)
     caprese_step1_ingred1.ingredient = tomato_ingredient
     caprese_step1.ingredients.append(caprese_step1_ingred1)
 
-    caprese_step2 = Step(description='Layer tomatoes, mozzarella, and basil on a plate.', seconds=180)
+    caprese_step2 = Step(
+        description="Layer tomatoes, mozzarella, and basil on a plate.", seconds=180
+    )
     caprese_step2_ingred1 = StepIngredients(amount_needed=150)
     caprese_step2_ingred1.ingredient = mozzarella_ingredient
     caprese_step2.ingredients.append(caprese_step2_ingred1)
@@ -590,7 +527,7 @@ def seed_recipes():
     caprese_step2_ingred2.ingredient = basil_ingredient
     caprese_step2.ingredients.append(caprese_step2_ingred2)
 
-    caprese_step3 = Step(description='Drizzle with olive oil and serve.', seconds=30)
+    caprese_step3 = Step(description="Drizzle with olive oil and serve.", seconds=30)
     caprese_step3_ingred1 = StepIngredients(amount_needed=20)
     caprese_step3_ingred1.ingredient = olive_oil_ingredient
     caprese_step3.ingredients.append(caprese_step3_ingred1)
@@ -600,7 +537,6 @@ def seed_recipes():
     caprese_salad.steps.append(caprese_step3)
 
     db.session.add(caprese_salad)
-
 
     db.session.commit()
 
@@ -618,7 +554,6 @@ def undo_recipes():
         db.session.execute(text("DELETE FROM recipes"))
         db.session.execute(text("DELETE FROM ingredients"))
         db.session.execute(text("DELETE FROM steps"))
-        db.session.execute(text("DELETE FROM recipe_ingredients"))
         db.session.execute(text("DELETE FROM step_ingredients"))
 
     db.session.commit()

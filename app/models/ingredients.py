@@ -18,9 +18,6 @@ class Ingredient(db.Model):
     )
 
     user = db.relationship("User", back_populates="ingredients")
-    recipes = db.relationship(
-        "RecipeIngredients", back_populates="ingredient", cascade="all, delete-orphan"
-    )
     steps = db.relationship(
         "StepIngredients", back_populates="ingredient", cascade="all, delete-orphan"
     )
@@ -35,15 +32,4 @@ class Ingredient(db.Model):
             "unit_of_measurement": self.unit_of_measurement,
             "img": self.img,
             "user_id": self.user_id,
-        }
-
-    def to_dict(self):
-        recipes = [
-            {**recipe.recipe.to_dict_simple(), "amount_needed": recipe.amount_needed}
-            for recipe in self.recipes
-        ]
-
-        return {
-            **self.to_dict_simple(),
-            "Recipes": recipes,
         }

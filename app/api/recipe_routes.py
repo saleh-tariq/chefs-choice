@@ -1,7 +1,7 @@
 from flask import Blueprint, request
-from app.models import db, Recipe, RecipeIngredients, Ingredient
+from app.models import db, Recipe, Ingredient, Step, StepIngredients
 from app.forms.recipe_form import RecipeForm
-from app.forms.recipe_ingredient_form import RecipeIngredientForm
+from app.forms.recipe_step_form import RecipeStepForm
 from flask_login import current_user, login_required
 # from ..forms import RecipeForm
 
@@ -27,7 +27,11 @@ def get_available_recipes():
     """
     user = current_user.to_dict()
     recipes = Recipe.query.filter(Recipe.user_id == user["id"]).all()
-    return {"Recipes": [recipe.to_dict_simple() for recipe in recipes if recipe.is_available()]}
+    return {
+        "Recipes": [
+            recipe.to_dict_simple() for recipe in recipes if recipe.is_available()
+        ]
+    }
 
 
 @recipe_routes.route("/unavailable")
@@ -38,7 +42,11 @@ def get_unavailable_recipes():
     """
     user = current_user.to_dict()
     recipes = Recipe.query.filter(Recipe.user_id == user["id"]).all()
-    return {"Recipes": [recipe.to_dict_simple() for recipe in recipes if not recipe.is_available()]}
+    return {
+        "Recipes": [
+            recipe.to_dict_simple() for recipe in recipes if not recipe.is_available()
+        ]
+    }
 
 
 @recipe_routes.route("/<int:recipe_id>")
@@ -105,67 +113,35 @@ def post_new_recipe():
     return
 
 
-@recipe_routes.route("/<int:recipe_id>/ingredients", methods=["POST"])
+@recipe_routes.route("/<int:recipe_id>/steps", methods=["POST"])
 @login_required
-def post_new_ingredient_to_recipe(recipe_id):
+def post_new_step_to_recipe(recipe_id):
     """
-    Create a new Ingredient for a Recipe
+    Create a new step for a Recipe
     """
 
     recipe = Recipe.query.get(recipe_id)
-    form = RecipeIngredientForm()
+    form = RecipeStepForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     if not recipe.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
     if form.validate_on_submit():
-        new_ingredient = Ingredient(
-            name=form.name.data,
-            price_per_unit=form.price_per_unit.data,
-            amount_available=form.amount_available.data,
-            unit_of_measurement=form.unit_of_measurement.data,
+        new_step = Step(
+            description=form.description.data,
             img=form.img.data,
         )
 
-        new_ingredient.user_id = current_user.to_dict()["id"]
-
-        recipe_ingredient = RecipeIngredients(amount_needed=form.amount_needed.data)
-        recipe_ingredient.ingredient = new_ingredient
-        recipe.ingredients.append(recipe_ingredient)
-
-        db.session.add(new_ingredient)
+        new_step.user_id = current_user.to_dict()["id"]
+        db.session.add(new_step)
         db.session.commit()
 
-        return new_ingredient.to_dict(), 201
+        return new_step.to_dict(), 201
 
     if form.errors:
         return {"errors": form.errors}, 400
 
     return
-
-
-@recipe_routes.route(
-    "/<int:recipe_id>/ingredients/<int:ingredient_id>", methods=["DELETE"]
-)
-@login_required
-def delete_ingredient_from_a_recipe(recipe_id, ingredient_id):
-    """
-    Delete an Ingredient from a Recipe
-    """
-    ingredient = Ingredient.query.get(ingredient_id)
-    recipe_ingredient = RecipeIngredients.query.filter(
-        RecipeIngredients.recipe_id == recipe_id
-        and RecipeIngredients.ingredient_id == ingredient_id
-    ).first()
-    if not recipe_ingredient:
-        return {"errors": {"message": "Ingredient not found for this recipe"}}, 404
-    if not ingredient.user_id == current_user.id:
-        return {"errors": {"message": "Unauthorized"}}, 401
-
-    temp = ingredient.to_dict()
-    db.session.delete(recipe_ingredient)
-    db.session.commit()
-    return {"message": "Ingredient successfully deleted from recipe", "Recipe": temp}
 
 
 @recipe_routes.route("/<int:recipe_id>", methods=["PUT"])

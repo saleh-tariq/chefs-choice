@@ -21,8 +21,8 @@ export default function Layout() {
         <Navigation />
         {isLoaded && (user ? <Outlet /> : <LoginAndSignupPage />)}
         <Modal />
-        <div id="footer" className="dark">
-          <NavLink to={"/"} id="logo" className="dark">
+        <div id="footer" className="dark-secondary">
+          <NavLink to={"/"} id="logo" className="dark-secondary">
             Chef's Choice
           </NavLink>
         </div>

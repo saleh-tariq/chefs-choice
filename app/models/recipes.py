@@ -16,11 +16,8 @@ class Recipe(db.Model):
     )
 
     user = db.relationship("User", back_populates="recipes")
-    ingredients = db.relationship(
-        "RecipeIngredients", back_populates="recipe", cascade="all, delete-orphan"
-    )
     steps = db.relationship(
-        'Step', back_populates='recipe', cascade="all, delete-orphan"
+        "Step", back_populates="recipe", cascade="all, delete-orphan"
     )
 
     def to_dict_simple(self):
@@ -32,25 +29,39 @@ class Recipe(db.Model):
             "user_id": self.user_id,
         }
 
-    def to_dict(self):
-        ingredients = [
-            {
-                **ingredient.ingredient.to_dict_simple(),
-                "amount_needed": ingredient.amount_needed,
-            }
-            for ingredient in self.ingredients
-        ]
+    def total_seconds(self):
+        seconds = 0
+        for step in self.steps:
+            seconds = seconds + step.seconds
 
-        return {
-            **self.to_dict_simple(),
-            "Ingredients": ingredients,
-        }
-    
+        return seconds
+
+    def total_ingredients(self):
+        res = []
+        for step in self.steps:
+            for ingredient in step.to_dict()["Ingredients"]:
+                res.append(ingredient)
+
+        return res
+
     def is_available(self):
-        for ingredient in self.ingredients:
-            if ingredient.amount_needed > ingredient.ingredient.amount_available:
+        for step in self.steps:
+            if not step.can_make():
                 return False
         return True
-    
+
     def missing_ingredients(self):
-        return [{"Ingredient": ingredient.ingredient.to_dict_simple(), "amount_needed": ingredient.amount_needed} for ingredient in self.ingredients if ingredient.amount_needed > ingredient.ingredient.amount_available]
+        return [
+            ingredient
+            for ingredient in self.total_ingredients()
+            if ingredient.amount_needed > ingredient.amount_available
+        ]
+
+    def to_dict(self):
+        return {
+            **self.to_dict_simple(),
+            "steps": [step.to_dict() for step in self.steps],
+            "total_seconds": self.total_seconds(),
+            "is_available": self.is_available(),
+            "missing_ingredients": self.missing_ingredients(),
+        }

@@ -1,10 +1,10 @@
 import os
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, request, redirect ##, render_template,session
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, Ingredient, Recipe
+from .models import db, User, Ingredient, Recipe, Step
 from .api import user_routes, auth_routes, recipe_routes, ingredient_routes
 from .seeds import seed_commands
 from .config import Config

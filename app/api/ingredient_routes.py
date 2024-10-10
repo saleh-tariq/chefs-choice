@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import db, Recipe, RecipeIngredients, Ingredient
+from app.models import db, Recipe, Ingredient
 from app.forms.ingredient_form import IngredientForm
 from flask_login import current_user, login_required
 # from ..forms import RecipeForm
@@ -79,19 +79,19 @@ def put_ingredient(ingredient_id):
     Edits an existing ingredient
     """
     ingredient = Ingredient.query.get(ingredient_id)
-    print('\n\n\n\n\n\n\n\n')
+    print("\n\n\n\n\n\n\n\n")
     if not ingredient:
         return {"errors": {"message": "Ingredient not found"}}, 404
 
     if not ingredient.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
-    print('------------------')
-    print('\n\n\n\n\n\n\n\n')
-    print('------------------')
+    print("------------------")
+    print("\n\n\n\n\n\n\n\n")
+    print("------------------")
     form = IngredientForm()
     print(form)
-    print('\n\n\n\n\n\n\n\n')
+    print("\n\n\n\n\n\n\n\n")
     form["csrf_token"].data = request.cookies["csrf_token"]
     print(form.data)
 
@@ -104,4 +104,4 @@ def put_ingredient(ingredient_id):
 
         return ingredient.to_dict_simple(), 201
 
-    return {"errors" : "unknown origin"}, 418
+    return {"errors": "unknown origin"}, 418
