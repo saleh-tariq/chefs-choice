@@ -1,0 +1,28 @@
+.col1,
+.col2 {
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.col1,
+.col2,
+.col3 {
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+
+.home-recipes {
+  width: 1000px;
+}
+
+.col1 > h3 {
+  cursor: pointer;
+}
+
+.home-recipes th {
+  cursor: pointer;
+}
+
+.selected-header {
+  cursor: default;
+}

@@ -6,6 +6,7 @@ import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation/Navigation";
 import LoginAndSignupPage from "../components/LoginAndSignupPage";
 
+
 export default function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,7 +20,7 @@ export default function Layout() {
     <>
       <ModalProvider>
         <Navigation />
-        {isLoaded && (user ? <Outlet /> : <LoginAndSignupPage />)}
+        {isLoaded ? (user ? <Outlet /> : <LoginAndSignupPage />): <h2>Loading...</h2>}
         <Modal />
         <div id="footer" className="dark-secondary">
           <NavLink to={"/"} id="logo" className="dark-secondary">

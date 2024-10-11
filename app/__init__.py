@@ -1,11 +1,11 @@
 import os
-from flask import Flask, request, redirect ##, render_template,session
+from flask import Flask, request, redirect  ##, render_template,session
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
 from .models import db, User, Ingredient, Recipe, Step
-from .api import user_routes, auth_routes, recipe_routes, ingredient_routes
+from .api import user_routes, auth_routes, recipe_routes, ingredient_routes, step_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -30,6 +30,7 @@ app.register_blueprint(auth_routes, url_prefix="/api/auth")
 # Add my stuff here lol ************************************************************************************
 app.register_blueprint(recipe_routes, url_prefix="/api/recipes")
 app.register_blueprint(ingredient_routes, url_prefix="/api/ingredients")
+app.register_blueprint(step_routes, url_prefix="/api/steps")
 db.init_app(app)
 Migrate(app, db)
 

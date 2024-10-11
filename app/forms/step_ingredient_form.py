@@ -4,9 +4,11 @@ from wtforms.validators import DataRequired
 
 
 class StepIngredientForm(FlaskForm):
-    name = StringField("name", validators=DataRequired())
+    name = StringField("name", validators=[DataRequired()])
     price_per_unit = IntegerField("price_per_unit")
-    amount_available = FloatField("amount_available", validators=DataRequired())
-    unit_of_measurement = StringField("unit_of_measurement", validators=DataRequired())
+    amount_available = FloatField("amount_available", validators=[DataRequired()])
+    unit_of_measurement = StringField(
+        "unit_of_measurement", validators=[DataRequired()]
+    )
     img = StringField("img")
-    amount_needed = FloatField("amount_needed", validators=DataRequired())
+    amount_needed = FloatField("amount_needed", validators=[DataRequired()])

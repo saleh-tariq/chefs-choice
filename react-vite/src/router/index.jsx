@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
         loader: async () => {
-          const res = await fetch("/api/recipes");
+          const res = await fetch("/api/recipes/available");
           const data = await res.json();
           if (res.ok) return data;
           return null;

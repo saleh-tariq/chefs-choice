@@ -54,7 +54,7 @@ class Recipe(db.Model):
         return [
             ingredient
             for ingredient in self.total_ingredients()
-            if ingredient.amount_needed > ingredient.amount_available
+            if ingredient["amount_needed"] > ingredient["amount_available"]
         ]
 
     def to_dict(self):

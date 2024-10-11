@@ -28,9 +28,7 @@ def get_available_recipes():
     user = current_user.to_dict()
     recipes = Recipe.query.filter(Recipe.user_id == user["id"]).all()
     return {
-        "Recipes": [
-            recipe.to_dict_simple() for recipe in recipes if recipe.is_available()
-        ]
+        "Recipes": [recipe.to_dict() for recipe in recipes if recipe.is_available()]
     }
 
 
@@ -130,7 +128,10 @@ def post_new_step_to_recipe(recipe_id):
         new_step = Step(
             description=form.description.data,
             img=form.img.data,
+            seconds=form.seconds.data,
         )
+
+        recipe.steps.append(new_step)
 
         new_step.user_id = current_user.to_dict()["id"]
         db.session.add(new_step)

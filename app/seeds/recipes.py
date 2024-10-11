@@ -1,13 +1,7 @@
-from app.models import (
-    db,
-    Recipe,
-    Step,
-    StepIngredients,
-    Ingredient,
-    environment,
-    SCHEMA,
-)
 from sqlalchemy.sql import text
+
+from app.models import (SCHEMA, Ingredient, Recipe, Step, StepIngredients, db,
+                        environment)
 
 rice_crispy_treats = Recipe(
     name="Rice Crispy Treats",
@@ -72,6 +66,9 @@ def seed_recipes():
         description="Finally, once cooked to your liking, remove the eggs and enjoy",
         seconds=0,
     )
+
+    sunny_step1.next_step = sunny_step2
+    sunny_step2.next_step = sunny_step3
 
     sunny.steps.append(sunny_step1)
     sunny.steps.append(sunny_step2)
@@ -143,6 +140,9 @@ def seed_recipes():
     stir_fry_step2.ingredients.append(stir_fry_step2_ingred3)
 
     stir_fry_step3 = Step(description="Serve hot with rice.", seconds=0)
+
+    stir_fry_step1.next_step = stir_fry_step2
+    stir_fry_step2.next_step = stir_fry_step3
 
     vegetable_stir_fry.steps.append(stir_fry_step1)
     vegetable_stir_fry.steps.append(stir_fry_step2)
@@ -223,6 +223,9 @@ def seed_recipes():
     aglio_e_olio_step3_ingred1.ingredient = chili_flakes_ingredient
     aglio_e_olio_step3.ingredients.append(aglio_e_olio_step3_ingred1)
 
+    aglio_e_olio_step1.next_step = aglio_e_olio_step2
+    aglio_e_olio_step2.next_step = aglio_e_olio_step3
+
     spaghetti_aglio_e_olio.steps.append(aglio_e_olio_step1)
     spaghetti_aglio_e_olio.steps.append(aglio_e_olio_step2)
     spaghetti_aglio_e_olio.steps.append(aglio_e_olio_step3)
@@ -299,6 +302,9 @@ def seed_recipes():
     curry_step3_ingred2.ingredient = curry_powder_ingredient
     curry_step3.ingredients.append(curry_step3_ingred2)
 
+    curry_step1.next_step = curry_step2
+    curry_step2.next_step = curry_step3
+
     chicken_curry.steps.append(curry_step1)
     chicken_curry.steps.append(curry_step2)
     chicken_curry.steps.append(curry_step3)
@@ -372,6 +378,9 @@ def seed_recipes():
     caprese_step3_ingred1.ingredient = olive_oil_ingredient
     caprese_step3.ingredients.append(caprese_step3_ingred1)
 
+    caprese_step1.next_step = caprese_step2
+    caprese_step2.next_step = caprese_step3
+
     caprese_salad.steps.append(caprese_step1)
     caprese_salad.steps.append(caprese_step2)
     caprese_salad.steps.append(caprese_step3)
@@ -430,6 +439,9 @@ def seed_recipes():
     omelette_step3_ingred2.ingredient = herbs_ingredient
     omelette_step3.ingredients.append(omelette_step3_ingred2)
 
+    omelette_step1.next_step = omelette_step2
+    omelette_step2.next_step = omelette_step3
+
     omelette.steps.append(omelette_step1)
     omelette.steps.append(omelette_step2)
     omelette.steps.append(omelette_step3)
@@ -483,6 +495,9 @@ def seed_recipes():
     fried_rice_step3_ingred1.ingredient = eggs  # Reusing eggs
     fried_rice_step3.ingredients.append(fried_rice_step3_ingred1)
 
+    fried_rice_step1.next_step = fried_rice_step2
+    fried_rice_step2.next_step = fried_rice_step3
+
     fried_rice.steps.append(fried_rice_step1)
     fried_rice.steps.append(fried_rice_step2)
     fried_rice.steps.append(fried_rice_step3)
@@ -531,6 +546,9 @@ def seed_recipes():
     caprese_step3_ingred1 = StepIngredients(amount_needed=20)
     caprese_step3_ingred1.ingredient = olive_oil_ingredient
     caprese_step3.ingredients.append(caprese_step3_ingred1)
+
+    caprese_step1.next_step = caprese_step2
+    caprese_step2.next_step = caprese_step3
 
     caprese_salad.steps.append(caprese_step1)
     caprese_salad.steps.append(caprese_step2)

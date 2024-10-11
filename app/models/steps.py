@@ -11,12 +11,17 @@ class Step(db.Model):
     description = db.Column(db.String(4000), nullable=False)
     seconds = db.Column(db.Integer)
     img = db.Column(db.String(400))
+    next_step_id = db.Column(
+        db.ForeignKey(add_prefix_for_prod("steps.id")), nullable=True
+    )
     recipe_id = db.Column(
         db.ForeignKey(add_prefix_for_prod("recipes.id")),
     )
 
     ingredients = db.relationship("StepIngredients", back_populates="step")
     recipe = db.relationship("Recipe", back_populates="steps")
+    next_step = db.relationship("Step", back_populates="prev_step", remote_side=[id])
+    prev_step = db.relationship("Step", back_populates="next_step")
 
     def can_make(self):
         for ingredient in self.ingredients:
