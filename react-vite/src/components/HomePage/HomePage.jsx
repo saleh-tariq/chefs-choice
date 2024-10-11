@@ -6,7 +6,7 @@ import logo from "/pngwing.com.png";
 
 function HomePage() {
   const user = useSelector((store) => store.session.user);
-  if (!user) {
+  if (!user || !logo) {
     return <h2>Loading...</h2>;
   }
   const { Recipes, Ingredients } = useLoaderData();
