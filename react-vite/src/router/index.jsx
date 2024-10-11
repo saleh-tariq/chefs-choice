@@ -16,9 +16,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
         loader: async () => {
-          const res = await fetch("/api/recipes/available");
-          const data = await res.json();
-          if (res.ok) return data;
+          const res1 = await fetch("/api/recipes/available");
+          const res2 = await fetch("/api/ingredients");
+          const data = { ...(await res1.json()), ...(await res2.json()) };
+          if (res1.ok && res2.ok) return data;
           return null;
         },
       },

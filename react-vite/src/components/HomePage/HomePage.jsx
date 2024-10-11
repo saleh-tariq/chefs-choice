@@ -1,23 +1,17 @@
 import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import { useSelector } from "react-redux";
+import logo from "/pngwing.com.png";
 
 function HomePage() {
-  const { Recipes } = useLoaderData();
-  const navigate = useNavigate();
-  const colSetter = {};
-  [colSetter.col1, colSetter.setCol1] = useState(false);
-  [colSetter.col2, colSetter.setCol2] = useState(false);
-  [colSetter.col3, colSetter.setCol3] = useState(true);
-
-  function changeOrderBy(col) {
-    const letters = col.split("");
-    const setter = `set${letters[0].toUpperCase() + letters.slice(1).join("")}`;
-    colSetter.setCol1(false);
-    colSetter.setCol2(false);
-    colSetter.setCol3(false);
-    colSetter[setter](true);
+  const user = useSelector((store) => store.session.user);
+  if (!user) {
+    return <h2>Loading...</h2>;
   }
+  const { Recipes, Ingredients } = useLoaderData();
+
+  const navigate = useNavigate();
 
   function formatDuration(seconds) {
     if (!seconds) return "instant";
@@ -50,60 +44,99 @@ function HomePage() {
           .join("") + time.slice(0, 2).reverse().join(" and ")
       : time.reverse().join(" and ");
   }
-  console.log(Recipes);
+
   return (
-    <>
-      <h2>Whats on the menu today?</h2>
-      {Recipes.length ? (
-        <table className="home-recipes">
-          <tr>
-            <th
-              className={"col1" + (colSetter.col1 ? " selected-header" : "")}
-              onClick={() => changeOrderBy("col1")}
-            >
-              Recipe name
-            </th>
-            <th
-              className={"col2" + (colSetter.col2 ? " selected-header" : "")}
-              onClick={() => changeOrderBy("col2")}
-            >
-              No. of steps
-            </th>
-            <th
-              className={"col3" + (colSetter.col3 ? " selected-header" : "")}
-              onClick={() => changeOrderBy("col3")}
-            >
-              Time to make
-            </th>
-          </tr>
-          {Recipes.sort((a, b) => a.steps.length - b.steps.length).map(
-            (recipe) => (
-              <tr>
-                <td className="col1">
-                  <h3 onClick={() => navigate("/recipes/" + recipe.id)}>
-                    {recipe.name}
-                  </h3>
-                </td>
-                <td className="col2" align="center">
-                  <p>{recipe.steps.length}</p>
-                </td>
-                <td className="col3" align="right">
-                  <p>{formatDuration(recipe.total_seconds)}</p>
-                </td>
-              </tr>
-            )
+    <div className="home-main">
+      <div className="home-logo">
+        <h2 className="logo ">
+          <img className="logo-image" src={logo} />
+          Chef's Choice
+        </h2>
+      </div>
+      <div className="home-nav-buttons">
+        <div
+          onClick={() => navigate("/recipes")}
+          className="cursive dark-secondary"
+        >
+          Recipes
+        </div>
+        <div
+          onClick={() => navigate("/ingredients")}
+          className="cursive dark-primary"
+        >
+          Ingredients
+        </div>
+      </div>
+      <div className="inset home-table-main">
+        <div className="home-recipes dark-secondary">
+          <table className="home-recipes-table">
+            <tr>
+              <th className="col1" align="center">
+                Recipe name
+              </th>
+              <th align="center">Time to make</th>
+            </tr>
+            {Recipes.sort((a, b) => a.total_seconds - b.total_seconds).map(
+              (recipe, i) => (
+                <tr className={i % 2 || "dark-primary"}>
+                  <td className="col1" align="center">
+                    <p onClick={() => navigate("/recipes/" + recipe.id)}>
+                      {recipe.name}
+                    </p>
+                  </td>
+                  <td align="center">
+                    <p>{formatDuration(recipe.total_seconds)}</p>
+                  </td>
+                </tr>
+              )
+            )}
+          </table>
+          <div
+            onClick={() => navigate("/recipes")}
+            className="dark home-recipe-button"
+          >
+            <h3>Create new recipe</h3>
+          </div>
+        </div>
+        <div>
+          {Ingredients.length ? (
+            <div className="home-ingredients dark-secondary">
+              <table className="">
+                <tr>
+                  <th className="col1" align="center">
+                    Ingredient name
+                  </th>
+                  <th align="center">Amount available</th>
+                </tr>
+                {Ingredients.sort(
+                  (a, b) => a.amount_available - b.amount_available
+                ).map((ingredient, i) => (
+                  <tr className={i % 2 || "dark-primary"}>
+                    <td className="col1" align="center">
+                      <p>{ingredient.name}</p>
+                    </td>
+                    <td align="center">
+                      <p>
+                        {ingredient.amount_available}{" "}
+                        {ingredient.unit_of_measurement}
+                      </p>
+                    </td>
+                  </tr>
+                ))}
+              </table>
+              <div
+                onClick={() => navigate("/ingredients")}
+                className="dark home-recipe-button"
+              >
+                <h3>View and create ingredients</h3>
+              </div>
+            </div>
+          ) : (
+            <></>
           )}
-        </table>
-      ) : (
-        <>
-          <h3>No recipes available</h3>
-          <button onClick={showUnavailable}>Show unavailable recipes</button>
-          <button onClick={() => navigate("/recipes")}>
-            Create new recipes
-          </button>
-        </>
-      )}
-    </>
+        </div>
+      </div>
+    </div>
   );
 }
 

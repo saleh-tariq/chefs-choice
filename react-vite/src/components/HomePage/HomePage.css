@@ -1,28 +1,119 @@
-.col1,
-.col2 {
-  border-right-width: 1px;
-  border-right-style: solid;
-}
-
-.col1,
-.col2,
-.col3 {
-  border-top-width: 1px;
-  border-top-style: solid;
-}
-
 .home-recipes {
+  width: 750px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  overflow-y: scroll;
+  height: 500px;
+  align-items: start;
+  scrollbar-width: 5px;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+}
+.home-recipes-table {
+  width: 750px;
+}
+
+.inset {
+  border-width: 1px;
+  border-radius: 25px;
+  border-style: solid;
+}
+
+.home-ingredients {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 250px;
+  overflow-y: scroll;
+  height: 500px;
+  scrollbar-width: none;
+}
+
+.home-table-main {
+  display: flex;
+  flex-direction: row;
+  max-height: 500px;
+}
+
+.inset table {
+  gap: none;
+}
+
+.inset th {
+  height: 45px;
+}
+
+.inset tr * {
+  margin: 0px;
+}
+
+.inset tr {
+  height: 35px;
+}
+
+.home-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-nav-buttons {
+  display: flex;
+  flex-direction: row;
   width: 1000px;
+  justify-content: space-between;
+  align-items: start;
+  height: 100px;
 }
 
-.col1 > h3 {
+.home-nav-buttons > * {
+  border-radius: 15px;
+  width: 495px;
+  font-size: 45px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.home-nav-buttons > *:hover {
+  scale: 105%;
+  transition: 0.15s;
   cursor: pointer;
 }
 
-.home-recipes th {
-  cursor: pointer;
-}
-
-.selected-header {
+.home-nav-buttons > *:active {
+  scale: 95%;
+  opacity: 80%;
+  transition: 0.15s;
   cursor: default;
+}
+
+.home-recipe-button {
+  width: 100%;
+  max-height: 100%;
+  height: max-content;
+  min-height: 100px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-recipe-button > * {
+  font-size: 25px;
+  text-align: center;
+}
+
+.home-recipe-button:hover > * {
+  scale: 105%;
+  transition: 0.15s;
+}
+
+.home-recipe-button:active > * {
+  scale: 95%;
+  transition: 0.15s;
 }
