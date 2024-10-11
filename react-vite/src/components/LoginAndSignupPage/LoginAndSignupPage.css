@@ -1,0 +1,9 @@
+.login-signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 250px;
+}
+.login-signup-form >*{
+
+}
