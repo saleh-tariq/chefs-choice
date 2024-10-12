@@ -30,7 +30,7 @@ function SignupFormPage() {
         email,
         username,
         password,
-      }),
+      })
     );
 
     if (serverResponse) {
@@ -42,27 +42,21 @@ function SignupFormPage() {
 
   return (
     <>
-      <h1 className="dark-secondary-text">Sign Up</h1>
+      <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form className="login-signup-form signup-form" onSubmit={handleSubmit}>
         <input
           type="text"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setUsername(e.target.value);
+          }}
           placeholder="Email"
           className="dark-primary"
           required
         />
         {errors.email && <p>{errors.email}</p>}
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          placeholder="Username"
-          className="dark-primary"
-        />
-        {errors.username && <p>{errors.username}</p>}
         <input
           type="password"
           value={password}

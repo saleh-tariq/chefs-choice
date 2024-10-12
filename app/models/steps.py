@@ -14,6 +14,7 @@ class Step(db.Model):
     next_step_id = db.Column(
         db.ForeignKey(add_prefix_for_prod("steps.id")), nullable=True
     )
+    is_head = db.Column(db.Integer, nullable=True)
     recipe_id = db.Column(
         db.ForeignKey(add_prefix_for_prod("recipes.id")),
     )
@@ -36,6 +37,7 @@ class Step(db.Model):
             "description": self.description,
             "seconds": self.seconds,
             "img": self.img,
+            "next_step_id": self.next_step_id,
             "Ingredients": [
                 {
                     **ingredient.ingredient.to_dict_simple(),

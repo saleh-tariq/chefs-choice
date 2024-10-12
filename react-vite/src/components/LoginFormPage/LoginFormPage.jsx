@@ -21,7 +21,7 @@ function LoginFormPage() {
       thunkLogin({
         email,
         password,
-      }),
+      })
     );
 
     if (serverResponse) {
@@ -33,7 +33,7 @@ function LoginFormPage() {
 
   return (
     <>
-      <h1 className="dark-secondary-text">Log In</h1>
+      <h1>Log In</h1>
       {errors.length > 0 &&
         errors.map((message) => <p key={message}>{message}</p>)}
       <form className="login-signup-form login-form" onSubmit={handleSubmit}>
@@ -55,6 +55,16 @@ function LoginFormPage() {
           className="dark-primary"
         />
         {errors.password && <p>{errors.password}</p>}
+        <button
+          className="dark-secondary"
+          onClick={() => {
+            setEmail("demo@aa.io");
+            setPassword("password");
+          }}
+          type="submit"
+        >
+          Log In As Demo User
+        </button>
         <button className="dark-accent" type="submit">
           Log In
         </button>

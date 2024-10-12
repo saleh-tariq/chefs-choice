@@ -65,3 +65,11 @@ class Recipe(db.Model):
             "is_available": self.is_available(),
             "missing_ingredients": self.missing_ingredients(),
         }
+    
+    def to_dict_advanced(self):
+        return {
+            **self.to_dict_simple(),
+            "total_seconds": self.total_seconds(),
+            "is_available": self.is_available(),
+            "missing_ingredients": self.missing_ingredients(),
+        }

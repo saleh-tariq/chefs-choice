@@ -9,7 +9,10 @@ function HomePage() {
   if (!user || !logo) {
     return <h2>Loading...</h2>;
   }
-  const { Recipes, Ingredients } = useLoaderData();
+  const { Recipes, Ingredients } = useLoaderData() || {
+    Recipes: [],
+    Ingredients: [],
+  };
 
   const navigate = useNavigate();
 

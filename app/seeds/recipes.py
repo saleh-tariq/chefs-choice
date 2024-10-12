@@ -52,7 +52,7 @@ def seed_recipes():
     )
 
     ## STEPS
-    sunny_step1 = Step(description="First, butter a pan on low heat", seconds=60)
+    sunny_step1 = Step(description="First, butter a pan on low heat", seconds=60,is_head =1)
     sunny_step1_ingred1 = StepIngredients(amount_needed=0.25)
     sunny_step1_ingred1.ingredient = butter
     sunny_step1.ingredients.append(sunny_step1_ingred1)
@@ -110,7 +110,7 @@ def seed_recipes():
     )
 
     ## STEPS
-    stir_fry_step1 = Step(description="Heat oil in a pan over medium heat.", seconds=60)
+    stir_fry_step1 = Step(description="Heat oil in a pan over medium heat.", seconds=60,is_head =1)
     oil = Ingredient(
         name="Vegetable Oil",
         price_per_unit=40,
@@ -197,7 +197,7 @@ def seed_recipes():
 
     ## STEPS
     aglio_e_olio_step1 = Step(
-        description="Boil water and cook spaghetti until al dente.", seconds=600
+        description="Boil water and cook spaghetti until al dente.", seconds=600,is_head =1
     )
     aglio_e_olio_step1_ingred1 = StepIngredients(amount_needed=200)
     aglio_e_olio_step1_ingred1.ingredient = spaghetti_ingredient
@@ -279,7 +279,7 @@ def seed_recipes():
 
     ## STEPS
     curry_step1 = Step(
-        description="Sauté chopped onion until translucent.", seconds=180
+        description="Sauté chopped onion until translucent.", seconds=180,is_head =1
     )
     curry_step1_ingred1 = StepIngredients(amount_needed=1)
     curry_step1_ingred1.ingredient = onion_ingredient
@@ -357,7 +357,7 @@ def seed_recipes():
     )
 
     ## STEPS
-    caprese_step1 = Step(description="Slice mozzarella and tomatoes.", seconds=120)
+    caprese_step1 = Step(description="Slice mozzarella and tomatoes.", seconds=120,is_head =1)
     caprese_step1_ingred1 = StepIngredients(amount_needed=250)
     caprese_step1_ingred1.ingredient = mozzarella_ingredient
     caprese_step1.ingredients.append(caprese_step1_ingred1)
@@ -416,7 +416,7 @@ def seed_recipes():
     )
 
     ## STEPS
-    omelette_step1 = Step(description="Whisk eggs in a bowl.", seconds=30)
+    omelette_step1 = Step(description="Whisk eggs in a bowl.", seconds=30,is_head =1)
     omelette_step1_ingred1 = StepIngredients(amount_needed=3)
     omelette_step1_ingred1.ingredient = eggs
     omelette_step1.ingredients.append(omelette_step1_ingred1)
@@ -477,7 +477,7 @@ def seed_recipes():
 
     ## STEPS
     fried_rice_step1 = Step(
-        description="Heat oil in a pan and add cooked rice.", seconds=120
+        description="Heat oil in a pan and add cooked rice.", seconds=120,is_head =1
     )
     fried_rice_step1_ingred1 = StepIngredients(amount_needed=200)
     fried_rice_step1_ingred1.ingredient = rice_ingredient
@@ -525,7 +525,7 @@ def seed_recipes():
 
     ## STEPS
     caprese_step1 = Step(
-        description="Slice tomatoes and mozzarella cheese.", seconds=120
+        description="Slice tomatoes and mozzarella cheese.", seconds=120,is_head =1
     )
     caprese_step1_ingred1 = StepIngredients(amount_needed=200)
     caprese_step1_ingred1.ingredient = tomato_ingredient

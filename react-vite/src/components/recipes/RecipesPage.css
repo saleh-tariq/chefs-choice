@@ -1,1 +1,20 @@
+.recipes-page {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.recipes-table {
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.recipe {
+  gap: 30px;
+}
+
+.recipes-table {
+  width: 100%;
+}

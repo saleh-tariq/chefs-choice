@@ -65,9 +65,9 @@ function NavBar() {
               My Ingredients
             </NavLink>
             <NavLink to="/recipes" className={"dark-accent-text"}>
-              Recipes
+              My Recipes
             </NavLink>
-            <button onClick={logout} className="dark-secondary">
+            <button onClick={logout} className="dark-accent logout">
               Log Out
             </button>
           </>

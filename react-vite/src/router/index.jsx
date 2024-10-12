@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginFormPage from "../components/LoginFormPage";
 import SignupFormPage from "../components/SignupFormPage";
-import LoginAndSignupPage from "../components/LoginAndSignupPage";
 import IngredientsPage from "../components/IngredientsPage";
 import HomePage from "../components/HomePage";
 import Layout from "./Layout";
@@ -35,23 +34,14 @@ export const router = createBrowserRouter([
         path: "recipes",
         element: <RecipesPage />,
         loader: async () => {
-          const res = [
-            await fetch("/api/recipes"),
-            await fetch("/api/recipes/available"),
-            await fetch("/api/recipes/unavailable"),
-          ];
-          const data = [];
-          for (let i = 0; i < res.length; i++) {
-            data[i] = await res[i].json();
-          }
-          if (!data.includes(false)) {
+          const res = await fetch("/api/recipes");
+          const data = await res.json();
+          if (res.ok) {
             return {
-              Recipes: data[0],
-              Available: data[1],
-              Unavailable: data[2],
+              Recipes: data,
             };
           }
-          return null;
+          return { Recipes: [] };
         },
       },
       {
