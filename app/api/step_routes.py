@@ -31,9 +31,9 @@ def delete_step(step_id):
 
 @step_routes.route("/<int:step_id>/ingredients", methods=["POST"])
 @login_required
-def post_new_ingredient_to_step(step_id):
+def post_ingredient_to_step(step_id):
     """
-    Create a new Ingredient for a Recipe
+    Add a Ingredient to a Recipe Step
     """
 
     step = Step.query.get(step_id)
@@ -43,21 +43,11 @@ def post_new_ingredient_to_step(step_id):
         return {"errors": {"message": "Unauthorized"}}, 401
 
     if form.validate_on_submit():
-        new_ingredient = Ingredient(
-            name=form.name.data,
-            price_per_unit=form.price_per_unit.data,
-            amount_available=form.amount_available.data,
-            unit_of_measurement=form.unit_of_measurement.data,
-            img=form.img.data,
-        )
+        new_ingredient = Ingredient.query.get(form.ingredient_id.data)
 
-        new_ingredient.user_id = current_user.to_dict()["id"]
-
-        step_ingredient = StepIngredients(amount_needed=form.amount_needed.data)
+        step_ingredient = StepIngredients(amount_needed=form.amount_needed.data, step_id=step.id)
         step_ingredient.ingredient = new_ingredient
-        step.ingredients.append(step_ingredient)
 
-        db.session.add(new_ingredient)
         db.session.commit()
 
         return new_ingredient.to_dict_simple(), 201
@@ -66,6 +56,43 @@ def post_new_ingredient_to_step(step_id):
         return {"errors": form.errors}, 400
 
     return
+# @step_routes.route("/<int:step_id>/ingredients", methods=["POST"])
+# @login_required
+# def post_new_ingredient_to_step(step_id):
+#     """
+#     Create a new Ingredient for a Recipe Step
+#     """
+
+#     step = Step.query.get(step_id)
+#     form = StepIngredientForm()
+#     form["csrf_token"].data = request.cookies["csrf_token"]
+#     if not step.recipe.user_id == current_user.id:
+#         return {"errors": {"message": "Unauthorized"}}, 401
+
+#     if form.validate_on_submit():
+#         new_ingredient = Ingredient(
+#             name=form.name.data,
+#             price_per_unit=form.price_per_unit.data,
+#             amount_available=form.amount_available.data,
+#             unit_of_measurement=form.unit_of_measurement.data,
+#             img=form.img.data,
+#         )
+
+#         new_ingredient.user_id = current_user.to_dict()["id"]
+
+#         step_ingredient = StepIngredients(amount_needed=form.amount_needed.data)
+#         step_ingredient.ingredient = new_ingredient
+#         step.ingredients.append(step_ingredient)
+
+#         db.session.add(new_ingredient)
+#         db.session.commit()
+
+#         return new_ingredient.to_dict_simple(), 201
+
+#     if form.errors:
+#         return {"errors": form.errors}, 400
+
+#     return
 
 
 @step_routes.route("/<int:step_id>/ingredients/<int:ingredient_id>", methods=["DELETE"])

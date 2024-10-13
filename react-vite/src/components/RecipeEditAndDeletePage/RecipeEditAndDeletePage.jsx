@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./RecipeEditAndDeletePage.css";
 import { FaRegPlusSquare } from "react-icons/fa";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import formatDuration from "/utils/format-duration";
 
 function RecipeEditAndDeletePage() {
+  const navigate = useNavigate();
+  const submit = useSubmit();
   const [description, setDescription] = useState("");
   const { Ingredients } = useLoaderData();
   const [committedSteps, setCommittedSteps] = useState([]);
@@ -12,6 +15,26 @@ function RecipeEditAndDeletePage() {
   const [minutes, setMinutes] = useState(0);
   const [selected, setSelected] = useState(Ingredients[0]);
   const [amountNeeded, setAmountNeeded] = useState(0);
+  const [recipeDescription, setRecipeDescription] = useState("");
+  const [recipeName, setRecipeName] = useState("");
+
+  const post = async () => {
+    console.log(committedSteps);
+    submit(
+      {
+        Recipe: { name: recipeName, description: recipeDescription },
+        Steps: committedSteps.map((step) => {
+          return {
+            Ingredients: step.ingredients,
+            description: step.description,
+            seconds: step.seconds,
+          };
+        }),
+      },
+      { method: "post", encType: "application/json" }
+    );
+    navigate("/recipes");
+  };
 
   return (
     <div>
@@ -20,13 +43,22 @@ function RecipeEditAndDeletePage() {
         className="recipe-form"
         onSubmit={(e) => {
           e.preventDefault();
+          post();
         }}
       >
         <h2>New Recipe</h2>
-        <input type="text" placeholder="name" className="dark-primary" />
+        <input
+          type="text"
+          placeholder="name"
+          className="dark-primary"
+          value={recipeName}
+          onInput={(e) => setRecipeName(e.target.value)}
+        />
         <textarea
           placeholder="description..."
           className="textarea recipe-description dark-primary"
+          value={recipeDescription}
+          onInput={(e) => setRecipeDescription(e.target.value)}
         />
         <h3>Steps</h3>
         {committedSteps.map((step, i) => {
@@ -34,7 +66,8 @@ function RecipeEditAndDeletePage() {
             <div>
               <p>{`Step #${i + 1}`}</p>
               <p>{step.description}</p>
-              {!!step.ingredients.length && <p>Ingredients used</p>}
+              <p>{formatDuration(step.seconds)}</p>
+              {!!step.ingredients.length && <p>Ingredients used:</p>}
               {step.ingredients.map((i) => {
                 return (
                   <>
@@ -43,6 +76,16 @@ function RecipeEditAndDeletePage() {
                   </>
                 );
               })}
+              <button
+                className="dark-accent"
+                onClick={(e) => {
+                  e.preventDefault();
+                  committedSteps.splice(i, 1);
+                  setCommittedSteps([...committedSteps]);
+                }}
+              >
+                Remove step
+              </button>
             </div>
           );
         })}
@@ -65,6 +108,16 @@ function RecipeEditAndDeletePage() {
                   <p>
                     {i.ingredient.name} | {i.amountNeeded}
                   </p>
+                  <button
+                    className="dark-accent"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      ingredients.splice(i, 1);
+                      setIngredients([...ingredients]);
+                    }}
+                  >
+                    Remove ingredient
+                  </button>
                 </>
               );
             })}

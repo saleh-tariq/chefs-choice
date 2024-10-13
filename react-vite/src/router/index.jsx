@@ -71,6 +71,56 @@ export const router = createBrowserRouter([
           if (res.ok) return data;
           return null;
         },
+        action: async ({ request: req }) => {
+          const { Recipe, Steps } = await req.json();
+          const res = await fetch(`/api/recipes`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: Recipe.name,
+              description: Recipe.description,
+            }),
+          });
+          const recipe = await res.json();
+
+          console.log(recipe);
+
+          for (let i = 0; i < Steps.length; i++) {
+            let currStep = Steps[i];
+            const res = await fetch(`/api/recipes/${recipe.id}/steps`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                description: currStep.description,
+                seconds: currStep.seconds,
+              }),
+            });
+
+            const step = await res.json();
+            console.log(currStep.Ingredients);
+            for (let j = 0; j < currStep.Ingredients.length; j++) {
+              let ingredient = currStep.Ingredients[j];
+              const res = await fetch(`/api/steps/${step.id}/ingredients`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  ingredient_id: ingredient.ingredient.id,
+                  amount_needed: ingredient.amountNeeded,
+                }),
+              });
+
+              const newIngredient = await res.json();
+              console.log(newIngredient);
+            }
+          }
+          return null;
+        },
       },
       {
         path: "ingredients",

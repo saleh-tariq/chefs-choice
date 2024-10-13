@@ -54,14 +54,14 @@ def get_recipe_by_id(recipe_id):
     Get details of a specific recipe by its ID
     """
     recipe = Recipe.query.get(recipe_id)
-    first_step = Step.query.filter(Step.is_head == 1, Step.recipe_id == recipe.id).first()
-    steps = [first_step]
-    while(True):
-        if steps[-1].next_step_id:
-            steps.append(steps[-1].next_step)
-        else:
-            break
-    return {**recipe.to_dict_advanced(), "steps": [step.to_dict() for step in steps]}
+    # first_step = Step.query.filter(Step.is_head == 1, Step.recipe_id == recipe.id).first()
+    # steps = [first_step]
+    # while(True and steps[-1]):
+    #     if steps[-1].next_step_id:
+    #         steps.append(steps[-1].next_step)
+    #     else:
+    #         break
+    return {**recipe.to_dict_advanced(), "steps": [step.to_dict() for step in recipe.steps]}
 
 
 @recipe_routes.route("/<int:recipe_id>")
@@ -131,13 +131,18 @@ def post_new_step_to_recipe(recipe_id):
     if not recipe.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
+    print('\n\n\n\n\n\n\n\n\n')
     if form.validate_on_submit():
         new_step = Step(
-            description=form.description.data,
-            img=form.img.data,
-            seconds=form.seconds.data,
+            # description=form.description.data,
+            # img=form.img.data,
+            # seconds=form.seconds.data,
         )
 
+        form.populate_obj(new_step)
+
+        print('form validated')
+        print('')
         recipe.steps.append(new_step)
 
         new_step.user_id = current_user.to_dict()["id"]
