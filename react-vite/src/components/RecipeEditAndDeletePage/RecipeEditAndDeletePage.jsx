@@ -46,7 +46,7 @@ function RecipeEditAndDeletePage({ edit }) {
       },
       { method: "post", encType: "application/json" },
     );
-    //navigate("/recipes");
+    navigate("/recipes");
   };
 
   return (
