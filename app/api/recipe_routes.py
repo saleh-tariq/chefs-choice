@@ -1,8 +1,10 @@
 from flask import Blueprint, request
-from app.models import db, Recipe, Ingredient, Step, StepIngredients
+from flask_login import current_user, login_required
+
 from app.forms.recipe_form import RecipeForm
 from app.forms.recipe_step_form import RecipeStepForm
-from flask_login import current_user, login_required
+from app.models import Ingredient, Recipe, Step, StepIngredients, db
+
 # from ..forms import RecipeForm
 
 recipe_routes = Blueprint("recipes", __name__)
@@ -61,7 +63,10 @@ def get_recipe_by_id(recipe_id):
     #         steps.append(steps[-1].next_step)
     #     else:
     #         break
-    return {**recipe.to_dict_advanced(), "steps": [step.to_dict() for step in recipe.steps]}
+    return {
+        **recipe.to_dict_advanced(),
+        "steps": [step.to_dict() for step in recipe.steps],
+    }
 
 
 @recipe_routes.route("/<int:recipe_id>")
@@ -131,7 +136,7 @@ def post_new_step_to_recipe(recipe_id):
     if not recipe.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
-    print('\n\n\n\n\n\n\n\n\n')
+    print("\n\n\n\n\n\n\n\n\n")
     if form.validate_on_submit():
         new_step = Step(
             # description=form.description.data,
@@ -141,8 +146,8 @@ def post_new_step_to_recipe(recipe_id):
 
         form.populate_obj(new_step)
 
-        print('form validated')
-        print('')
+        print("form validated")
+        print("")
         recipe.steps.append(new_step)
 
         new_step.user_id = current_user.to_dict()["id"]
@@ -159,7 +164,7 @@ def post_new_step_to_recipe(recipe_id):
 
 @recipe_routes.route("/<int:recipe_id>", methods=["PUT"])
 @login_required
-def put_template(recipe_id):
+def put_recipe(recipe_id):
     """
     Edits an existing recipe
     """
@@ -180,6 +185,6 @@ def put_template(recipe_id):
         db.session.add(recipe)
         db.session.commit()
 
-        return recipe.to_dict_simple(), 201
+        return recipe.to_dict(), 201
 
     return

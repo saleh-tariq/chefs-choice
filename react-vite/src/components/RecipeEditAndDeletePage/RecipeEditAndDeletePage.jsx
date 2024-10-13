@@ -4,22 +4,35 @@ import { FaRegPlusSquare } from "react-icons/fa";
 import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import formatDuration from "/utils/format-duration";
 
-function RecipeEditAndDeletePage() {
+function RecipeEditAndDeletePage({ edit }) {
   const navigate = useNavigate();
   const submit = useSubmit();
+  const data = useLoaderData();
+  const { Ingredients } = data;
+  const { Recipe } = edit ? data : { Recipe: {} };
+  const [committedSteps, setCommittedSteps] = useState(
+    edit
+      ? Recipe.steps.map((step) => {
+        return {
+          description: step.description,
+          ingredients: step.Ingredients,
+          seconds: step.seconds,
+        };
+      })
+      : [],
+  );
   const [description, setDescription] = useState("");
-  const { Ingredients } = useLoaderData();
-  const [committedSteps, setCommittedSteps] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [selected, setSelected] = useState(Ingredients[0]);
   const [amountNeeded, setAmountNeeded] = useState(0);
-  const [recipeDescription, setRecipeDescription] = useState("");
-  const [recipeName, setRecipeName] = useState("");
+  const [recipeDescription, setRecipeDescription] = useState(
+    edit ? Recipe.description : "",
+  );
+  const [recipeName, setRecipeName] = useState(edit ? Recipe.name : "");
 
   const post = async () => {
-    console.log(committedSteps);
     submit(
       {
         Recipe: { name: recipeName, description: recipeDescription },
@@ -31,9 +44,9 @@ function RecipeEditAndDeletePage() {
           };
         }),
       },
-      { method: "post", encType: "application/json" }
+      { method: "post", encType: "application/json" },
     );
-    navigate("/recipes");
+    //navigate("/recipes");
   };
 
   return (
@@ -46,7 +59,7 @@ function RecipeEditAndDeletePage() {
           post();
         }}
       >
-        <h2>New Recipe</h2>
+        <h2>{edit ? "Edit Recipe" : "New Recipe"}</h2>
         <input
           type="text"
           placeholder="name"
@@ -69,9 +82,10 @@ function RecipeEditAndDeletePage() {
               <p>{formatDuration(step.seconds)}</p>
               {!!step.ingredients.length && <p>Ingredients used:</p>}
               {step.ingredients.map((i) => {
+                console.log(i);
                 return (
                   <>
-                    <p>{i.ingredient.name}</p>
+                    <p>{i.name}</p>
                     <p>{i.amountNeeded}</p>
                   </>
                 );
@@ -106,7 +120,7 @@ function RecipeEditAndDeletePage() {
               return (
                 <>
                   <p>
-                    {i.ingredient.name} | {i.amountNeeded}
+                    {i.name} | {i.amountNeeded}
                   </p>
                   <button
                     className="dark-accent"
@@ -122,7 +136,6 @@ function RecipeEditAndDeletePage() {
               );
             })}
           </div>
-
           <div>
             <select
               className="dark-secondary"
@@ -131,8 +144,8 @@ function RecipeEditAndDeletePage() {
                   Ingredients.find(
                     (b) =>
                       b.id ===
-                      Number(e.target.options[e.target.selectedIndex].id)
-                  )
+                      Number(e.target.options[e.target.selectedIndex].id),
+                  ),
                 );
               }}
             >
@@ -159,16 +172,12 @@ function RecipeEditAndDeletePage() {
               className="dark-secondary"
               onClick={(e) => {
                 e.preventDefault();
-                setIngredients([
-                  ...ingredients,
-                  { ingredient: selected, amountNeeded },
-                ]);
+                setIngredients([...ingredients, { ...selected, amountNeeded }]);
               }}
             >
               Add ingredient
             </button>
           </div>
-
           <div>
             <p>Time to complete</p>
             <input
@@ -186,7 +195,6 @@ function RecipeEditAndDeletePage() {
               onInput={(e) => setSeconds(Number(e.target.value))}
             />
           </div>
-
           <button
             className="dark-accent recipe-form-add-step"
             onClick={(e) => {
@@ -203,7 +211,9 @@ function RecipeEditAndDeletePage() {
             <FaRegPlusSquare />
           </button>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="dark-accent">
+          Submit
+        </button>
       </form>
     </div>
   );

@@ -1,11 +1,12 @@
 from flask import Blueprint, request
-from app.models import db, Recipe, Ingredient, Step, StepIngredients
+from flask_login import current_user, login_required
+
 from app.forms.recipe_form import RecipeForm
 from app.forms.recipe_step_form import RecipeStepForm
 from app.forms.step_form import StepForm
 from app.forms.step_ingredient_form import StepIngredientForm
+from app.models import Ingredient, Recipe, Step, StepIngredients, db
 
-from flask_login import current_user, login_required
 # from ..forms import RecipeForm
 
 step_routes = Blueprint("steps", __name__)
@@ -20,7 +21,7 @@ def delete_step(step_id):
     step = Step.query.get(step_id)
     if not step:
         return {"errors": {"message": "Step not found"}}, 404
-    if not step.user_id == current_user.id:
+    if not step.recipe.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
     temp = step.to_dict()
@@ -45,7 +46,9 @@ def post_ingredient_to_step(step_id):
     if form.validate_on_submit():
         new_ingredient = Ingredient.query.get(form.ingredient_id.data)
 
-        step_ingredient = StepIngredients(amount_needed=form.amount_needed.data, step_id=step.id)
+        step_ingredient = StepIngredients(
+            amount_needed=form.amount_needed.data, step_id=step.id
+        )
         step_ingredient.ingredient = new_ingredient
 
         db.session.commit()
@@ -56,6 +59,8 @@ def post_ingredient_to_step(step_id):
         return {"errors": form.errors}, 400
 
     return
+
+
 # @step_routes.route("/<int:step_id>/ingredients", methods=["POST"])
 # @login_required
 # def post_new_ingredient_to_step(step_id):
