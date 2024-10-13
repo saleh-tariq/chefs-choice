@@ -32,7 +32,7 @@ export default function Layout() {
         <div id="footer" className="dark-secondary">
           <NavLink to={"/"} className="logo dark-secondary">
             <img className="logo-image" src="/pngwing.com.png" />
-            Chef's Choice
+            {"Chef's Choice"}
           </NavLink>
         </div>
       </ModalProvider>

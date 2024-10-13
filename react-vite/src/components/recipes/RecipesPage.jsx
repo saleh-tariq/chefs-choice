@@ -27,6 +27,7 @@ function RecipesPage() {
         {Recipes.Recipes.sort((a, b) => a.total_seconds - b.total_seconds).map(
           (recipe, i) => (
             <Recipe
+              key={i}
               className={!(i % 2) ? "dark-primary" : "dark-secondary"}
               recipeId={recipe.id}
               recipeName={recipe.name}

@@ -6,19 +6,16 @@ from app.models import (SCHEMA, Ingredient, Recipe, Step, StepIngredients, db,
 rice_crispy_treats = Recipe(
     name="Rice Crispy Treats",
     description="Soft yet crispy home-made rice crispies to make any kids party a blast",
-    img="https://images.kglobalservices.com/www.ricekrispies.com/en_us/recipe/kicrecipe-1605/recip_img-7547527_recip_img-7547527_recip_img-7547527.jpg",
     user_id=1,
 )
 roasted_potatoes = Recipe(
     name="Classic Roasted Potatoes",
     description="A simple yet flavor packed recipe to bring your entire family together",
-    img="https://www.foodnetwork.com/content/dam/images/food/fullset/2011/2/2/0/BXSP01H_rosemary-roasted-potatoes_s4x3.jpg",
     user_id=1,
 )
 tuna_melt = Recipe(
     name="Tuna Melts",
     description="A classic recipe for any picnic",
-    img="https://www.seriouseats.com/thmb/h3BPsOL0qqqBPYN4aivT3xEAZG4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20240214-TunaMelt-SEA--Peyton-Beckworth-1f500549fa8f48499e436fa3c2a0ca0e.jpg",
     user_id=1,
 )
 
@@ -29,7 +26,6 @@ def seed_recipes():
     sunny = Recipe(
         name="Sunny Side Up Eggs",
         description="Sunny Side Up Eggs LMAOOOO",
-        img="https://thebakermama.com/wp-content/uploads/2021/03/IMG_5169-scaled.jpg",
         user_id=1,
     )
 
@@ -39,7 +35,6 @@ def seed_recipes():
         price_per_unit=25,
         amount_available=48,
         unit_of_measurement="eggs",
-        img="https://www.shadygrovefertility.com/wp-content/uploads/2023/07/Egg-supply-blog.png",
         user_id=1,
     )
     butter = Ingredient(
@@ -47,7 +42,6 @@ def seed_recipes():
         price_per_unit=129,
         amount_available=7,
         unit_of_measurement="sticks",
-        img="https://www.realsimple.com/thmb/VvdPHiBwtcQgPl8MiRbOjSjNo4g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/freeze-butter-GettyImages-466938239-b386cf1b961642089337ab851e40a87e.jpg",
         user_id=1,
     )
 
@@ -79,7 +73,6 @@ def seed_recipes():
     vegetable_stir_fry = Recipe(
         name="Vegetable Stir-Fry",
         description="A quick and healthy vegetable stir-fry.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/vegetable-stir-fry.jpg",
         user_id=1,
     )
 
@@ -89,7 +82,6 @@ def seed_recipes():
         price_per_unit=50,
         amount_available=1000,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/bell-pepper.jpg",
         user_id=1,
     )
     broccoli = Ingredient(
@@ -97,7 +89,6 @@ def seed_recipes():
         price_per_unit=40,
         amount_available=1000,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/broccoli.jpg",
         user_id=1,
     )
     carrot = Ingredient(
@@ -105,7 +96,6 @@ def seed_recipes():
         price_per_unit=30,
         amount_available=1000,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/carrot.jpg",
         user_id=1,
     )
 
@@ -116,7 +106,6 @@ def seed_recipes():
         price_per_unit=40,
         amount_available=500,
         unit_of_measurement="ml",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/vegetable-oil.jpg",
         user_id=1,
     )
     stir_fry_step1_ingred1 = StepIngredients(amount_needed=20)
@@ -154,7 +143,6 @@ def seed_recipes():
     spaghetti_aglio_e_olio = Recipe(
         name="Spaghetti Aglio e Olio",
         description="A classic Italian pasta dish with garlic and olive oil.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/spaghetti-aglio-e-olio.jpg",
         user_id=1,
     )
 
@@ -164,7 +152,6 @@ def seed_recipes():
         price_per_unit=150,
         amount_available=500,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/spaghetti.jpg",
         user_id=1,
     )
 
@@ -173,7 +160,6 @@ def seed_recipes():
         price_per_unit=20,
         amount_available=100,
         unit_of_measurement="cloves",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/garlic.jpg",
         user_id=1,
     )
 
@@ -182,7 +168,6 @@ def seed_recipes():
         price_per_unit=300,
         amount_available=1000,
         unit_of_measurement="ml",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/olive-oil.jpg",
         user_id=1,
     )
 
@@ -191,7 +176,6 @@ def seed_recipes():
         price_per_unit=15,
         amount_available=100,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/red-chili-flakes.jpg",
         user_id=1,
     )
 
@@ -236,7 +220,6 @@ def seed_recipes():
     chicken_curry = Recipe(
         name="Chicken Curry",
         description="A flavorful chicken curry with spices.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/chicken-curry.jpg",
         user_id=1,
     )
 
@@ -246,7 +229,6 @@ def seed_recipes():
         price_per_unit=200,
         amount_available=1000,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/chicken.jpg",
         user_id=1,
     )
 
@@ -255,7 +237,6 @@ def seed_recipes():
         price_per_unit=15,
         amount_available=100,
         unit_of_measurement="units",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/onion.jpg",
         user_id=1,
     )
 
@@ -264,7 +245,6 @@ def seed_recipes():
         price_per_unit=10,
         amount_available=500,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/tomato.jpg",
         user_id=1,
     )
 
@@ -273,7 +253,6 @@ def seed_recipes():
         price_per_unit=50,
         amount_available=200,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/curry-powder.jpg",
         user_id=1,
     )
 
@@ -315,7 +294,6 @@ def seed_recipes():
     caprese_salad = Recipe(
         name="Caprese Salad",
         description="A fresh salad with tomatoes, mozzarella, and basil.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/caprese-salad.jpg",
         user_id=1,
     )
 
@@ -325,7 +303,6 @@ def seed_recipes():
         price_per_unit=300,
         amount_available=500,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/mozzarella.jpg",
         user_id=1,
     )
 
@@ -334,7 +311,6 @@ def seed_recipes():
         price_per_unit=10,
         amount_available=500,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/tomato.jpg",
         user_id=1,
     )
 
@@ -343,7 +319,6 @@ def seed_recipes():
         price_per_unit=50,
         amount_available=100,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/basil.jpg",
         user_id=1,
     )
 
@@ -352,7 +327,6 @@ def seed_recipes():
         price_per_unit=300,
         amount_available=1000,
         unit_of_measurement="ml",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/olive-oil.jpg",
         user_id=1,
     )
 
@@ -391,7 +365,6 @@ def seed_recipes():
     omelette = Recipe(
         name="Omelette",
         description="A fluffy omelette with cheese and herbs.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/omelette.jpg",
         user_id=1,
     )
 
@@ -402,7 +375,6 @@ def seed_recipes():
         price_per_unit=200,
         amount_available=300,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/cheddar.jpg",
         user_id=1,
     )
 
@@ -411,7 +383,6 @@ def seed_recipes():
         price_per_unit=50,
         amount_available=100,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/herbs.jpg",
         user_id=1,
     )
 
@@ -452,7 +423,6 @@ def seed_recipes():
     fried_rice = Recipe(
         name="Fried Rice",
         description="Delicious fried rice with vegetables and eggs.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/fried-rice.jpg",
         user_id=1,
     )
 
@@ -462,7 +432,6 @@ def seed_recipes():
         price_per_unit=50,
         amount_available=1000,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/rice.jpg",
         user_id=1,
     )
 
@@ -471,7 +440,6 @@ def seed_recipes():
         price_per_unit=80,
         amount_available=500,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/vegetables.jpg",
         user_id=1,
     )
 
@@ -508,7 +476,6 @@ def seed_recipes():
     caprese_salad = Recipe(
         name="Caprese Salad",
         description="A fresh salad with tomatoes, mozzarella, and basil.",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/caprese-salad.jpg",
         user_id=1,
     )
 
@@ -519,7 +486,6 @@ def seed_recipes():
         price_per_unit=250,
         amount_available=300,
         unit_of_measurement="grams",
-        img="https://www.acouplecooks.com/wp-content/uploads/2020/05/mozzarella.jpg",
         user_id=1,
     )
 

@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
           return null;
         },
         action: async ({ params }) => {
-          const res = await fetch("/api/recipes/" + params.recipeId, {
+          await fetch("/api/recipes/" + params.recipeId, {
             method: "DELETE",
           });
           redirect("/recipes");
@@ -142,7 +142,7 @@ export const router = createBrowserRouter([
               amount_available: ingredient.amountAvailable,
               unit_of_measurement: ingredient.unitsOfMeasurement,
             });
-            const res = await fetch(`/api/ingredients/${ingredient.id}`, {
+            await fetch(`/api/ingredients/${ingredient.id}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
@@ -159,7 +159,7 @@ export const router = createBrowserRouter([
           }
           if (req.method.toUpperCase() === "POST") {
             const ingredient = data;
-            const res = await fetch(`/api/ingredients`, {
+            await fetch(`/api/ingredients`, {
               method: "post",
               headers: {
                 "Content-Type": "application/json",
@@ -176,7 +176,7 @@ export const router = createBrowserRouter([
           }
           if (req.method.toUpperCase() === "DELETE") {
             const { id } = data;
-            const res = await fetch(`/api/ingredients/${id}`, {
+            await fetch(`/api/ingredients/${id}`, {
               method: "DELETE",
             });
             return null;
