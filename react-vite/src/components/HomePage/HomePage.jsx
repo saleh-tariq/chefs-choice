@@ -60,11 +60,11 @@ function HomePage() {
                     <p>{formatDuration(recipe.total_seconds)}</p>
                   </td>
                 </tr>
-              )
+              ),
             )}
           </table>
           <div
-            onClick={() => navigate("/recipes")}
+            onClick={() => navigate("/recipes/new")}
             className="dark home-recipe-button"
           >
             <h3>Create new recipe</h3>
@@ -81,7 +81,7 @@ function HomePage() {
                   <th align="center">Amount available</th>
                 </tr>
                 {Ingredients.sort(
-                  (a, b) => a.amount_available - b.amount_available
+                  (a, b) => a.amount_available - b.amount_available,
                 ).map((ingredient, i) => (
                   <tr className={i % 2 || "dark-primary"}>
                     <td className="col1" align="center">
