@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import LoginFormPage from "../components/LoginFormPage";
 import SignupFormPage from "../components/SignupFormPage";
 import IngredientsPage from "../components/IngredientsPage";
@@ -6,6 +6,7 @@ import HomePage from "../components/HomePage";
 import Layout from "./Layout";
 import RecipesPage from "../components/recipes";
 import RecipeDetailsPage from "../components/RecipeDetails";
+import RecipeEditAndDeletePage from "../components/RecipeEditAndDeletePage";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,23 @@ export const router = createBrowserRouter([
         element: <RecipeDetailsPage />,
         loader: async ({ params }) => {
           const res = await fetch("/api/recipes/" + params.recipeId);
+          const data = await res.json();
+          if (res.ok) return data;
+          return null;
+        },
+        action: async ({ params }) => {
+          const res = await fetch("/api/recipes/" + params.recipeId, {
+            method: "DELETE",
+          });
+          redirect("/recipes");
+          return null;
+        },
+      },
+      {
+        path: "recipes/new",
+        element: <RecipeEditAndDeletePage />,
+        loader: async () => {
+          const res = await fetch("/api/ingredients");
           const data = await res.json();
           if (res.ok) return data;
           return null;

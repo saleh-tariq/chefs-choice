@@ -10,3 +10,51 @@
 .recipe-details {
   width: 1000px;
 }
+
+.recipe-steps {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipe-step {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 228px;
+  height: 228px;
+  border-radius: 15px;
+  border-width: 1px;
+  border-style: solid;
+  justify-content: space-between;
+}
+
+.recipe-step > p {
+  margin: 0px;
+}
+
+.recipe-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipe-top * {
+  font-size: 35px;
+}
+
+.recipe-edit {
+  margin: 5px;
+}
+
+.recipe-delete {
+  margin: 0px;
+  padding: 5px;
+}
+
+.recipe-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}

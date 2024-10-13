@@ -117,3 +117,7 @@
   height: 60px;
   user-select: none;
 }
+
+.textarea {
+  resize: none;
+}

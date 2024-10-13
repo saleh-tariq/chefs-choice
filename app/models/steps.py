@@ -19,7 +19,7 @@ class Step(db.Model):
         db.ForeignKey(add_prefix_for_prod("recipes.id")),
     )
 
-    ingredients = db.relationship("StepIngredients", back_populates="step")
+    ingredients = db.relationship("StepIngredients", back_populates="step",cascade="all, delete-orphan")
     recipe = db.relationship("Recipe", back_populates="steps")
     next_step = db.relationship("Step", back_populates="prev_step", remote_side=[id])
     prev_step = db.relationship("Step", back_populates="next_step")
