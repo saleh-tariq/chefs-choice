@@ -41,7 +41,26 @@ function RecipeEditAndDeletePage({ edit }) {
       return "Please use an amount greater than 0.";
     }
   };
+
+  const validate_step = () => {
+    if (!description) {
+      return "Step description is required";
+    }
+  };
+
+  const validate_recipe = () => {
+    if (!recipeDescription || !recipeName) {
+      return "Recipe name and description are required";
+    }
+  };
+
   const post = async () => {
+    const recipeErr = validate_recipe();
+    errors.recipe = null;
+    setErrors({ ...errors });
+    if (recipeErr) {
+      return setErrors({ ...errors, recipe: recipeErr });
+    }
     submit(
       {
         Recipe: { name: recipeName, description: recipeDescription },
@@ -68,6 +87,7 @@ function RecipeEditAndDeletePage({ edit }) {
         }}
       >
         <h2>{edit ? "Edit Recipe" : "New Recipe"}</h2>
+        {errors.recipe}
         <input
           type="text"
           placeholder="name"
@@ -180,6 +200,8 @@ function RecipeEditAndDeletePage({ edit }) {
               className="dark-secondary"
               onClick={(e) => {
                 e.preventDefault();
+                errors.ingredient = null;
+                setErrors({ ...errors });
                 const ingredErr = validate_ingredient();
                 if (ingredErr) {
                   return setErrors({ ...errors, ingredient: ingredErr });
@@ -212,6 +234,12 @@ function RecipeEditAndDeletePage({ edit }) {
             className="dark-accent recipe-form-add-step"
             onClick={(e) => {
               e.preventDefault();
+              errors.step = null;
+              setErrors({ ...errors });
+              const stepErr = validate_step();
+              if (stepErr) {
+                return setErrors({ ...errors, step: stepErr });
+              }
               committedSteps.push({
                 description,
                 ingredients,
@@ -223,6 +251,7 @@ function RecipeEditAndDeletePage({ edit }) {
             Add Step
             <FaRegPlusSquare />
           </button>
+          {errors.step ? errors.step : null}
         </div>
         <button type="submit" className="dark-accent">
           Submit

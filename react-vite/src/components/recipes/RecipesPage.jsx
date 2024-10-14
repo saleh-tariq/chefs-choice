@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Recipe from "./Recipe";
 import "./RecipesPage.css";
@@ -6,11 +6,15 @@ import formatDuration from "/utils/format-duration";
 
 function RecipesPage() {
   const navigate = useNavigate();
-  const { Recipes } = useLoaderData() || {
+  const data = useLoaderData();
+  const [Recipes, setRecipes] = useState({
     Recipes: [],
     Available: [],
     Unavailable: [],
-  };
+  });
+  useEffect(() => {
+    if (data) setRecipes(data.Recipes);
+  }, data);
   return (
     <div className="recipes-page">
       <h2>Recipes</h2>

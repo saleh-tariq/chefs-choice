@@ -30,7 +30,6 @@ function RecipeDetailsPage() {
                 { id: recipe.id },
                 { method: "delete", encType: "application/json" }
               );
-              navigate("/recipes");
             }}
           >
             <button type="submit" className="dark-accent recipe-delete">

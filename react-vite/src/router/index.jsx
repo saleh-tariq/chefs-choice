@@ -58,8 +58,8 @@ export const router = createBrowserRouter([
           await fetch("/api/recipes/" + params.recipeId, {
             method: "DELETE",
           });
-          redirect("/recipes");
-          return null;
+
+          return redirect("/recipes");
         },
       },
       {
@@ -125,7 +125,7 @@ export const router = createBrowserRouter([
               const newIngredient = await res.json();
             }
           }
-          return null;
+          return redirect("/recipes");
         },
       },
       {
@@ -190,7 +190,7 @@ export const router = createBrowserRouter([
               console.log(newIngredient);
             }
           }
-          return null;
+          return redirect("/recipes");
         },
       },
       {
