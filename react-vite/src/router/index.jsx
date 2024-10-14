@@ -229,20 +229,25 @@ export const router = createBrowserRouter([
             return null;
           }
           if (req.method.toUpperCase() === "POST") {
+            console.log("hiiiii");
             const ingredient = data;
-            await fetch(`/api/ingredients`, {
-              method: "post",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                name: ingredient.name,
-                price_per_unit: ingredient.price,
-                img: ingredient.img,
-                amount_available: ingredient.amountAvailable,
-                unit_of_measurement: ingredient.unitsOfMeasurement,
-              }),
-            });
+            console.log(
+              await (
+                await fetch(`/api/ingredients`, {
+                  method: "post",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    name: ingredient.name,
+                    price_per_unit: ingredient.price,
+                    img: ingredient.img,
+                    amount_available: ingredient.amountAvailable,
+                    unit_of_measurement: ingredient.unitsOfMeasurement,
+                  }),
+                })
+              ).json()
+            );
             return null;
           }
           if (req.method.toUpperCase() === "DELETE") {

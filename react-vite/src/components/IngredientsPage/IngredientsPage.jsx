@@ -9,10 +9,32 @@ function IngredientsPage() {
   const [name, setName] = useState("");
   const [amountAvailable, setAmountAvailable] = useState(0);
   const [unitsOfMeasurement, setUnitsOfMeasurement] = useState("units");
+  const [errors, setErrors] = useState({});
+
+  const validate_ingredient = () => {
+    if (!name) {
+      errors.name = "Name is required";
+    } else if (name.length > 40) {
+      errors.name = "Name must be under 40 characters";
+    }
+    if (amountAvailable <= 0) {
+      errors.amount = "Amount cannot be negative or 0";
+    }
+    if (errors.name || errors.amount) {
+      console.log(name, amountAvailable, errors);
+      setErrors({ ...errors });
+      return true;
+    }
+    return false;
+  };
 
   useEffect(() => {}, [Ingredients]);
   const post = (e) => {
     e.preventDefault();
+    console.log("attempting to post");
+    const ingredientErr = validate_ingredient();
+    console.log(ingredientErr);
+    if (ingredientErr) return;
     submit(
       { name, amountAvailable, unitsOfMeasurement },
       { method: "post", encType: "application/json" }
@@ -33,9 +55,14 @@ function IngredientsPage() {
           <input
             className="dark-primary"
             type="text"
-            onInput={(e) => setName(e.target.value)}
+            onInput={(e) => {
+              errors.name = null;
+              setErrors({ ...errors });
+              setName(e.target.value);
+            }}
             value={name}
           />
+          {errors.name}
         </span>
         <span className="ingredient-form-amount">
           <div>
@@ -44,9 +71,15 @@ function IngredientsPage() {
             <input
               className="dark-primary"
               type="number"
-              onInput={(e) => setAmountAvailable(e.target.value)}
-              value={amountAvailable}
+              onInput={(e) => {
+                errors.amount = null;
+                setErrors({ ...errors });
+                setAmountAvailable(Number(e.target.value));
+              }}
+              placeholder="amount"
+              value={amountAvailable || ""}
             />
+            {errors.amount}
           </div>
           <div>
             <p>Units of Measurment</p>
