@@ -8,6 +8,7 @@ function RecipeDetailsPage() {
   const recipe = useLoaderData();
   const submit = useSubmit();
   const navigate = useNavigate();
+  console.log(recipe);
   return (
     <div className="recipe-details">
       <div className="recipe-top">
@@ -20,7 +21,7 @@ function RecipeDetailsPage() {
             onSubmit={(e) => {
               e.preventDefault();
               const confirmDelete = window.confirm(
-                "Are you sure you want to delete this Template?"
+                "Are you sure you want to delete this Recipe?"
               );
               if (!confirmDelete) {
                 return;
@@ -42,7 +43,7 @@ function RecipeDetailsPage() {
         {recipe.is_available
           ? "ready to make"
           : `ingredients needed: ${recipe.missing_ingredients
-              .map((e) => e.name)
+              .map((e) => `${e.name}`)
               .join(", ")}`}
       </p>
       <p>{recipe.description}</p>
@@ -53,9 +54,9 @@ function RecipeDetailsPage() {
             <div className="recipe-step dark-secondary">
               <h4>{`Step #${i + 1}`}</h4>
               <p>{step.description}</p>
-              <p>{`Ingredients used: ${step.Ingredients.map((e) => e.name).join(
-                ", "
-              )}`}</p>
+              <p>{`Ingredients used: ${step.Ingredients.map(
+                (e) => `${e.name} | ${e.amount_needed}`
+              ).join(", ")}`}</p>
             </div>
           </>
         ))}

@@ -47,10 +47,10 @@ def post_ingredient_to_step(step_id):
         new_ingredient = Ingredient.query.get(form.ingredient_id.data)
 
         step_ingredient = StepIngredients(
-            amount_needed=form.amount_needed.data, step_id=step.id
+            amount_needed=form.amount_needed.data, step_id=step.id, ingredient_id=new_ingredient.id
         )
-        step_ingredient.ingredient = new_ingredient
 
+        db.session.add(step_ingredient)
         db.session.commit()
 
         return new_ingredient.to_dict_simple(), 201
@@ -58,7 +58,7 @@ def post_ingredient_to_step(step_id):
     if form.errors:
         return {"errors": form.errors}, 400
 
-    return
+    return 418
 
 
 # @step_routes.route("/<int:step_id>/ingredients", methods=["POST"])

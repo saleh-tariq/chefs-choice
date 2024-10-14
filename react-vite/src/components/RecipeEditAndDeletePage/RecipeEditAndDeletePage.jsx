@@ -10,8 +10,7 @@ function RecipeEditAndDeletePage({ edit }) {
   const data = useLoaderData();
   const { Ingredients } = data;
   if (!Ingredients.length) {
-    const confirmed = window.confirm("please create ingredients first first");
-    navigate("/ingredients");
+    Ingredients[0] = { name: "No valid Ingredients" };
   }
   const { Recipe } = edit ? data : { Recipe: {} };
   const [committedSteps, setCommittedSteps] = useState(
@@ -35,7 +34,13 @@ function RecipeEditAndDeletePage({ edit }) {
     edit ? Recipe.description : ""
   );
   const [recipeName, setRecipeName] = useState(edit ? Recipe.name : "");
+  const [errors, setErrors] = useState({});
 
+  const validate_ingredient = () => {
+    if (!selected?.id || amountNeeded <= 0) {
+      return "Please use an amount greater than 0.";
+    }
+  };
   const post = async () => {
     submit(
       {
@@ -50,7 +55,6 @@ function RecipeEditAndDeletePage({ edit }) {
       },
       { method: "post", encType: "application/json" }
     );
-    navigate("/recipes");
   };
 
   return (
@@ -165,22 +169,27 @@ function RecipeEditAndDeletePage({ edit }) {
               className="dark-secondary"
               type="number"
               placeholder="amount needed"
-              value={amountNeeded}
+              value={amountNeeded || ""}
               onInput={(e) => {
                 e.preventDefault();
                 setAmountNeeded(Number(e.target.value));
               }}
             />
-            <p>{selected.unit_of_measurement}</p>
+            <p>{selected?.unit_of_measurement || "units"}</p>
             <button
               className="dark-secondary"
               onClick={(e) => {
                 e.preventDefault();
+                const ingredErr = validate_ingredient();
+                if (ingredErr) {
+                  return setErrors({ ...errors, ingredient: ingredErr });
+                }
                 setIngredients([...ingredients, { ...selected, amountNeeded }]);
               }}
             >
               Add ingredient
             </button>
+            {errors.ingredient ? errors.ingredient : null}
           </div>
           <div>
             <p>Time to complete</p>
@@ -188,14 +197,14 @@ function RecipeEditAndDeletePage({ edit }) {
               className="dark-secondary"
               type="number"
               placeholder="minutes"
-              value={minutes}
+              value={minutes || ""}
               onInput={(e) => setMinutes(Number(e.target.value))}
             />
             <input
               className="dark-secondary"
               type="number"
               placeholder="seconds"
-              value={seconds}
+              value={seconds || ""}
               onInput={(e) => setSeconds(Number(e.target.value))}
             />
           </div>

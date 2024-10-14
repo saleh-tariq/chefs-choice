@@ -151,9 +151,8 @@ export const router = createBrowserRouter([
           });
           const recipe = await res.json();
 
-          console.log(recipe);
-
           for (let i = 0; i < Steps.length; i++) {
+            console.log("we in");
             let currStep = Steps[i];
             const res = await fetch(`/api/recipes/${recipe.id}/steps`, {
               method: "POST",
@@ -167,16 +166,22 @@ export const router = createBrowserRouter([
             });
 
             const step = await res.json();
-            console.log(currStep.Ingredients);
+
+            console.log(
+              step,
+              currStep.Ingredients,
+              currStep.Ingredients.length
+            );
             for (let j = 0; j < currStep.Ingredients.length; j++) {
               let ingredient = currStep.Ingredients[j];
+              console.log("\n\n\n");
               const res = await fetch(`/api/steps/${step.id}/ingredients`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  ingredient_id: ingredient.ingredient.id,
+                  ingredient_id: ingredient.id,
                   amount_needed: ingredient.amountNeeded,
                 }),
               });

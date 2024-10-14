@@ -92,7 +92,11 @@ function Ingredient({ ingredient, i }) {
               className="dark-accent"
               onClick={(e) => {
                 e.preventDefault();
-                if (window.confirm("You suck")) {
+                if (
+                  window.confirm(
+                    "Are you sure you want to delete this Ingredient?"
+                  )
+                ) {
                   deleter(ingredient);
                 }
               }}

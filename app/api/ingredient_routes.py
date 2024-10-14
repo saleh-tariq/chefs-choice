@@ -25,7 +25,7 @@ def get_ingredient_by_id(ingredient_id):
     Get details of a specific ingredient by its ID
     """
     ingredient = Ingredient.query.get(ingredient_id)
-    return ingredient.to_dict()
+    return ingredient.to_dict_simple()
 
 
 @ingredient_routes.route("/<int:ingredient_id>", methods=["DELETE"])
@@ -40,7 +40,7 @@ def delete_ingredient(ingredient_id):
     if not ingredient.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
-    temp = ingredient.to_dict()
+    temp = ingredient.to_dict_simple()
     db.session.delete(ingredient)
     db.session.commit()
     return {"message": "Ingredient successfully deleted", "Ingredient": temp}
