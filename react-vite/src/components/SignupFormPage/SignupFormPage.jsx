@@ -15,9 +15,18 @@ function SignupFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
+  const validateEmail = () => {
+    if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+      return "Invalid Email";
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const emailErr = validateEmail();
+    if (emailErr) {
+      return setErrors({ email: emailErr });
+    }
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:

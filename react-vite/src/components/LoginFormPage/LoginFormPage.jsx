@@ -55,6 +55,9 @@ function LoginFormPage() {
           className="dark-primary"
         />
         {errors.password && <p>{errors.password}</p>}
+        <button className="dark-accent" type="submit">
+          Log In
+        </button>
         <button
           className="dark-secondary"
           onClick={() => {
@@ -64,9 +67,6 @@ function LoginFormPage() {
           type="submit"
         >
           Log In As Demo User
-        </button>
-        <button className="dark-accent" type="submit">
-          Log In
         </button>
       </form>
     </>
