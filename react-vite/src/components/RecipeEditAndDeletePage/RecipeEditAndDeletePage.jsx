@@ -18,7 +18,9 @@ function RecipeEditAndDeletePage({ edit }) {
       ? Recipe.steps.map((step) => {
           return {
             description: step.description,
-            ingredients: step.Ingredients,
+            ingredients: step.Ingredients.map((ingredient) => {
+              return { ...ingredient, amountNeeded: ingredient.amount_needed };
+            }),
             seconds: step.seconds,
           };
         })

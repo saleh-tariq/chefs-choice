@@ -117,7 +117,7 @@ export const router = createBrowserRouter([
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  ingredient_id: ingredient.ingredient.id,
+                  ingredient_id: ingredient.id,
                   amount_needed: ingredient.amountNeeded,
                 }),
               });
@@ -168,7 +168,7 @@ export const router = createBrowserRouter([
 
             for (let j = 0; j < currStep.Ingredients.length; j++) {
               let ingredient = currStep.Ingredients[j];
-
+              console.log(ingredient);
               const res = await fetch(`/api/steps/${step.id}/ingredients`, {
                 method: "POST",
                 headers: {
