@@ -152,7 +152,6 @@ export const router = createBrowserRouter([
           const recipe = await res.json();
 
           for (let i = 0; i < Steps.length; i++) {
-            console.log("we in");
             let currStep = Steps[i];
             const res = await fetch(`/api/recipes/${recipe.id}/steps`, {
               method: "POST",
@@ -167,14 +166,9 @@ export const router = createBrowserRouter([
 
             const step = await res.json();
 
-            console.log(
-              step,
-              currStep.Ingredients,
-              currStep.Ingredients.length
-            );
             for (let j = 0; j < currStep.Ingredients.length; j++) {
               let ingredient = currStep.Ingredients[j];
-              console.log("\n\n\n");
+
               const res = await fetch(`/api/steps/${step.id}/ingredients`, {
                 method: "POST",
                 headers: {
@@ -187,7 +181,6 @@ export const router = createBrowserRouter([
               });
 
               const newIngredient = await res.json();
-              console.log(newIngredient);
             }
           }
           return redirect("/recipes");
@@ -206,13 +199,7 @@ export const router = createBrowserRouter([
           const data = await req.json();
           if (req.method.toUpperCase() === "PUT") {
             const ingredient = data;
-            console.log({
-              name: ingredient.name,
-              price_per_unit: ingredient.price,
-              img: ingredient.img,
-              amount_available: ingredient.amountAvailable,
-              unit_of_measurement: ingredient.unitsOfMeasurement,
-            });
+
             await fetch(`/api/ingredients/${ingredient.id}`, {
               method: "PUT",
               headers: {
@@ -229,25 +216,22 @@ export const router = createBrowserRouter([
             return null;
           }
           if (req.method.toUpperCase() === "POST") {
-            console.log("hiiiii");
             const ingredient = data;
-            console.log(
-              await (
-                await fetch(`/api/ingredients`, {
-                  method: "post",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    name: ingredient.name,
-                    price_per_unit: ingredient.price,
-                    img: ingredient.img,
-                    amount_available: ingredient.amountAvailable,
-                    unit_of_measurement: ingredient.unitsOfMeasurement,
-                  }),
-                })
-              ).json()
-            );
+
+            await fetch(`/api/ingredients`, {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: ingredient.name,
+                price_per_unit: ingredient.price,
+                img: ingredient.img,
+                amount_available: ingredient.amountAvailable,
+                unit_of_measurement: ingredient.unitsOfMeasurement,
+              }),
+            });
+
             return null;
           }
           if (req.method.toUpperCase() === "DELETE") {

@@ -11,7 +11,6 @@ function LoginAndSignupPage() {
     setSignUp(!signup);
   };
   const sessionUser = useSelector((state) => state.session.user);
-  console.log(sessionUser);
   return sessionUser ? (
     <h2>loading...</h2>
   ) : (

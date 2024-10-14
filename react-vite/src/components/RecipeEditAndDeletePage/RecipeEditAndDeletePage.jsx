@@ -110,7 +110,6 @@ function RecipeEditAndDeletePage({ edit }) {
               <p>{formatDuration(step.seconds)}</p>
               {!!step.ingredients.length && <p>Ingredients used:</p>}
               {step.ingredients.map((i) => {
-                console.log(i);
                 return (
                   <>
                     <p>{i.name}</p>

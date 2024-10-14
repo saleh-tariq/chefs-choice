@@ -8,7 +8,6 @@ function RecipeDetailsPage() {
   const recipe = useLoaderData();
   const submit = useSubmit();
   const navigate = useNavigate();
-  console.log(recipe);
   return (
     <div className="recipe-details">
       <div className="recipe-top">

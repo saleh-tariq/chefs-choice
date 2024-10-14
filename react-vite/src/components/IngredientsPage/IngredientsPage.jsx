@@ -21,7 +21,6 @@ function IngredientsPage() {
       errors.amount = "Amount cannot be negative or 0";
     }
     if (errors.name || errors.amount) {
-      console.log(name, amountAvailable, errors);
       setErrors({ ...errors });
       return true;
     }
@@ -31,9 +30,7 @@ function IngredientsPage() {
   useEffect(() => {}, [Ingredients]);
   const post = (e) => {
     e.preventDefault();
-    console.log("attempting to post");
     const ingredientErr = validate_ingredient();
-    console.log(ingredientErr);
     if (ingredientErr) return;
     submit(
       { name, amountAvailable, unitsOfMeasurement },
