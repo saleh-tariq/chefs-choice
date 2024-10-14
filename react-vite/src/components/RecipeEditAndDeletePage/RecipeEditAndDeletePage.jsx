@@ -16,15 +16,15 @@ function RecipeEditAndDeletePage({ edit }) {
   const [committedSteps, setCommittedSteps] = useState(
     edit
       ? Recipe.steps.map((step) => {
-          return {
-            description: step.description,
-            ingredients: step.Ingredients.map((ingredient) => {
-              return { ...ingredient, amountNeeded: ingredient.amount_needed };
-            }),
-            seconds: step.seconds,
-          };
-        })
-      : []
+        return {
+          description: step.description,
+          ingredients: step.Ingredients.map((ingredient) => {
+            return { ...ingredient, amountNeeded: ingredient.amount_needed };
+          }),
+          seconds: step.seconds,
+        };
+      })
+      : [],
   );
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState([]);
@@ -33,7 +33,7 @@ function RecipeEditAndDeletePage({ edit }) {
   const [selected, setSelected] = useState(Ingredients[0]);
   const [amountNeeded, setAmountNeeded] = useState(0);
   const [recipeDescription, setRecipeDescription] = useState(
-    edit ? Recipe.description : ""
+    edit ? Recipe.description : "",
   );
   const [recipeName, setRecipeName] = useState(edit ? Recipe.name : "");
   const [errors, setErrors] = useState({});
@@ -74,7 +74,7 @@ function RecipeEditAndDeletePage({ edit }) {
           };
         }),
       },
-      { method: "post", encType: "application/json" }
+      { method: "post", encType: "application/json" },
     );
   };
 
@@ -90,169 +90,193 @@ function RecipeEditAndDeletePage({ edit }) {
       >
         <h2>{edit ? "Edit Recipe" : "New Recipe"}</h2>
         {errors.recipe}
-        <input
-          type="text"
-          placeholder="name"
-          className="dark-primary"
-          value={recipeName}
-          onInput={(e) => setRecipeName(e.target.value)}
-        />
-        <textarea
-          placeholder="description..."
-          className="textarea recipe-description dark-primary"
-          value={recipeDescription}
-          onInput={(e) => setRecipeDescription(e.target.value)}
-        />
-        <h3>Steps</h3>
-        {committedSteps.map((step, i) => {
-          return (
-            <div>
-              <p>{`Step #${i + 1}`}</p>
-              <p>{step.description}</p>
-              <p>{formatDuration(step.seconds)}</p>
-              {!!step.ingredients.length && <p>Ingredients used:</p>}
-              {step.ingredients.map((i) => {
-                return (
-                  <>
-                    <p>{i.name}</p>
-                    <p>{i.amountNeeded}</p>
-                  </>
-                );
-              })}
-              <button
-                className="dark-accent"
-                onClick={(e) => {
-                  e.preventDefault();
-                  committedSteps.splice(i, 1);
-                  setCommittedSteps([...committedSteps]);
-                }}
-              >
-                Remove step
-              </button>
-            </div>
-          );
-        })}
+        <div className="recipe-input-area">
+          <div className="recipe-name-disc">
+            <input
+              type="text"
+              placeholder="name"
+              className="dark-primary recipe-name"
+              value={recipeName}
+              onInput={(e) => setRecipeName(e.target.value)}
+            />
+            <textarea
+              placeholder="description..."
+              className="textarea recipe-description dark-primary"
+              value={recipeDescription}
+              onInput={(e) => setRecipeDescription(e.target.value)}
+            />
+          </div>
 
-        <div className="recipe-form-step dark-primary">
-          <textarea
-            value={description}
-            onInput={(e) => {
-              e.preventDefault();
-              setDescription(e.target.value);
-            }}
-            placeholder="description..."
-            className="textarea recipe-step-description dark-secondary"
-          />
-          <div>
-            <p>Ingredients</p>
-            {ingredients.map((i) => {
-              return (
-                <>
-                  <p>
-                    {i.name} | {i.amountNeeded}
-                  </p>
-                  <button
-                    className="dark-accent"
-                    onClick={(e) => {
+          <div className="recipe-form-step dark-primary">
+            <div className="recipe-form-step-only">
+              <h3>Add a Step</h3>
+              <textarea
+                value={description}
+                onInput={(e) => {
+                  e.preventDefault();
+                  setDescription(e.target.value);
+                }}
+                placeholder="description..."
+                className="textarea recipe-form-step-description dark-secondary"
+              />
+              <div className="recipe-form-step-seconds">
+                <p>Time to complete</p>
+                <input
+                  className="dark-secondary"
+                  type="number"
+                  placeholder="minutes"
+                  value={minutes || ""}
+                  onInput={(e) => setMinutes(Number(e.target.value))}
+                />
+                <input
+                  className="dark-secondary"
+                  type="number"
+                  placeholder="seconds"
+                  value={seconds || ""}
+                  onInput={(e) => setSeconds(Number(e.target.value))}
+                />
+                <button
+                  className="dark-accent recipe-form-add-step"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    errors.step = null;
+                    setErrors({ ...errors });
+                    const stepErr = validate_step();
+                    if (stepErr) {
+                      return setErrors({ ...errors, step: stepErr });
+                    }
+                    committedSteps.push({
+                      description,
+                      ingredients: [...ingredients],
+                      seconds: seconds + minutes * 60,
+                    });
+                    setCommittedSteps([...committedSteps]);
+                  }}
+                >
+                  Add Step
+                  <FaRegPlusSquare />
+                </button>
+              </div>
+            </div>
+            <div className="recipe-form-ingredient-container">
+              <div>
+                <select
+                  className="dark-secondary recipe-form-ingredient-select"
+                  onChange={(e) => {
+                    setSelected(
+                      Ingredients.find(
+                        (b) =>
+                          b.id ===
+                          Number(e.target.options[e.target.selectedIndex].id),
+                      ),
+                    );
+                  }}
+                >
+                  {Ingredients.map((e) => {
+                    return (
+                      <option id={e.id}>
+                        <p>{e.name}</p>
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="recipe-form-step-ingredient-form">
+                  <input
+                    className="dark-secondary"
+                    type="number"
+                    placeholder="amount needed"
+                    value={amountNeeded || ""}
+                    onInput={(e) => {
                       e.preventDefault();
-                      ingredients.splice(i, 1);
-                      setIngredients([...ingredients]);
+                      setAmountNeeded(Number(e.target.value));
                     }}
-                  >
-                    Remove ingredient
-                  </button>
-                </>
-              );
-            })}
+                  />
+                  <p>{selected?.unit_of_measurement || "units"}</p>
+                </div>
+                <button
+                  className="dark-accent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    errors.ingredient = null;
+                    setErrors({ ...errors });
+                    const ingredErr = validate_ingredient();
+                    if (ingredErr) {
+                      return setErrors({ ...errors, ingredient: ingredErr });
+                    }
+                    setIngredients([
+                      ...ingredients,
+                      { ...selected, amountNeeded },
+                    ]);
+                  }}
+                >
+                  Add ingredient to step
+                </button>
+                {errors.ingredient ? errors.ingredient : null}
+              </div>
+              <div>
+                <p>Ingredients added to step (scrollable):</p>
+                <div className="recipe-form-step-ingredients">
+                  {ingredients.map((i, idx) => {
+                    return (
+                      <div
+                        className={
+                          idx % 2
+                            ? "recipe-form-step-ingredient dark-primary"
+                            : "recipe-form-step-ingredient dark-secondary"
+                        }
+                      >
+                        <p>
+                          {i.name} | {i.amountNeeded}
+                        </p>
+                        <button
+                          className="dark-accent"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            ingredients.splice(i, 1);
+                            setIngredients([...ingredients]);
+                          }}
+                        >
+                          Remove ingredient
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {errors.step ? errors.step : null}
+            </div>
           </div>
-          <div>
-            <select
-              className="dark-secondary"
-              onChange={(e) => {
-                setSelected(
-                  Ingredients.find(
-                    (b) =>
-                      b.id ===
-                      Number(e.target.options[e.target.selectedIndex].id)
-                  )
-                );
-              }}
-            >
-              {Ingredients.map((e) => {
-                return (
-                  <option id={e.id}>
-                    <p>{e.name}</p>
-                  </option>
-                );
-              })}
-            </select>
-            <input
-              className="dark-secondary"
-              type="number"
-              placeholder="amount needed"
-              value={amountNeeded || ""}
-              onInput={(e) => {
-                e.preventDefault();
-                setAmountNeeded(Number(e.target.value));
-              }}
-            />
-            <p>{selected?.unit_of_measurement || "units"}</p>
-            <button
-              className="dark-secondary"
-              onClick={(e) => {
-                e.preventDefault();
-                errors.ingredient = null;
-                setErrors({ ...errors });
-                const ingredErr = validate_ingredient();
-                if (ingredErr) {
-                  return setErrors({ ...errors, ingredient: ingredErr });
-                }
-                setIngredients([...ingredients, { ...selected, amountNeeded }]);
-              }}
-            >
-              Add ingredient
-            </button>
-            {errors.ingredient ? errors.ingredient : null}
-          </div>
-          <div>
-            <p>Time to complete</p>
-            <input
-              className="dark-secondary"
-              type="number"
-              placeholder="minutes"
-              value={minutes || ""}
-              onInput={(e) => setMinutes(Number(e.target.value))}
-            />
-            <input
-              className="dark-secondary"
-              type="number"
-              placeholder="seconds"
-              value={seconds || ""}
-              onInput={(e) => setSeconds(Number(e.target.value))}
-            />
-          </div>
-          <button
-            className="dark-accent recipe-form-add-step"
-            onClick={(e) => {
-              e.preventDefault();
-              errors.step = null;
-              setErrors({ ...errors });
-              const stepErr = validate_step();
-              if (stepErr) {
-                return setErrors({ ...errors, step: stepErr });
-              }
-              committedSteps.push({
-                description,
-                ingredients,
-                seconds: seconds + minutes * 60,
-              });
-              setCommittedSteps([...committedSteps]);
-            }}
-          >
-            Add Step
-            <FaRegPlusSquare />
-          </button>
-          {errors.step ? errors.step : null}
+        </div>
+        <h3>Added Steps</h3>
+        <div className="">
+          {committedSteps.map((step, i) => {
+            return (
+              <div>
+                <p>{`Step #${i + 1}`}</p>
+                <p>{step.description}</p>
+                <p>{formatDuration(step.seconds)}</p>
+                {!!step.ingredients.length && <p>Ingredients used:</p>}
+                {step.ingredients.map((i) => {
+                  return (
+                    <>
+                      <p>{i.name}</p>
+                      <p>{i.amountNeeded}</p>
+                    </>
+                  );
+                })}
+                <button
+                  className="dark-accent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    committedSteps.splice(i, 1);
+                    setCommittedSteps([...committedSteps]);
+                  }}
+                >
+                  Remove step
+                </button>
+              </div>
+            );
+          })}
         </div>
         <button type="submit" className="dark-accent">
           Submit

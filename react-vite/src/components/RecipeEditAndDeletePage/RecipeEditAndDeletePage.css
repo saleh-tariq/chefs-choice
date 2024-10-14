@@ -5,12 +5,72 @@
 
 .recipe-description {
   width: 350px;
-  height: 200px;
-  margin-top: 10px;
+  height: 250px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.recipe-name {
+  height: 50px;
+  padding: 0px;
+  margin: 0px;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .recipe-form-add-step {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.recipe-input-area {
+  display: flex;
+  flex-direction: row;
+}
+
+.recipe-name-disc {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+
+.recipe-form-step {
+  display: flex;
+  flex-direction: row;
+  height: 300px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.recipe-form-step-only {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-form-step-seconds {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-form-step-description {
+  flex: 1;
+}
+
+.recipe-form-step-ingredient-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.recipe-form-ingredient-select {
+  width: 100%;
+}
+
+.recipe-form-step-ingredients {
+  width: 100%;
+  max-height: 160px;
+  flex: 1;
+  overflow: scroll;
+  scrollbar-width: none;
 }
