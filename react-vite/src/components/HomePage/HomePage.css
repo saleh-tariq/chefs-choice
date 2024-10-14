@@ -28,6 +28,8 @@
   overflow-y: scroll;
   height: 500px;
   scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .home-table-main {

@@ -1,11 +1,45 @@
 .ingredients {
-  width: 100%;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ingredient {
   width: 100%;
   height: 100px;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-areas: "name price";
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+}
+
+.ingredient-form-amount {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.ingredient-submit {
+  width: 100%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  margin-top: 10px;
+}
+
+.new-ingredient {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  padding-top: 10px;
+}
+
+.ingredient-form-name {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
 }

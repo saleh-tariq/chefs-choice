@@ -60,7 +60,7 @@ function HomePage() {
                     <p>{formatDuration(recipe.total_seconds)}</p>
                   </td>
                 </tr>
-              ),
+              )
             )}
           </table>
           <div
@@ -71,7 +71,7 @@ function HomePage() {
           </div>
         </div>
         <div>
-          {Ingredients.length ? (
+          {
             <div className="home-ingredients dark-secondary">
               <table className="">
                 <tr>
@@ -81,7 +81,7 @@ function HomePage() {
                   <th align="center">Amount available</th>
                 </tr>
                 {Ingredients.sort(
-                  (a, b) => a.amount_available - b.amount_available,
+                  (a, b) => a.amount_available - b.amount_available
                 ).map((ingredient, i) => (
                   <tr className={i % 2 || "dark-primary"}>
                     <td className="col1" align="center">
@@ -103,9 +103,7 @@ function HomePage() {
                 <h3>View and create ingredients</h3>
               </div>
             </div>
-          ) : (
-            <></>
-          )}
+          }
         </div>
       </div>
     </div>

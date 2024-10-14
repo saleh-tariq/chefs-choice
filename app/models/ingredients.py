@@ -9,7 +9,7 @@ class Ingredient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
-    price_per_unit = db.Column(db.Integer, nullable=False)
+    price_per_unit = db.Column(db.Integer, nullable=True)
     amount_available = db.Column(db.Float, nullable=False)
     unit_of_measurement = db.Column(db.String(40), nullable=False)
     img = db.Column(db.String(40))

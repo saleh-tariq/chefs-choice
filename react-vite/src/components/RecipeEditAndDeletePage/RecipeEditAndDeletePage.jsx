@@ -9,17 +9,21 @@ function RecipeEditAndDeletePage({ edit }) {
   const submit = useSubmit();
   const data = useLoaderData();
   const { Ingredients } = data;
+  if (!Ingredients.length) {
+    const confirmed = window.confirm("please create ingredients first first");
+    navigate("/ingredients");
+  }
   const { Recipe } = edit ? data : { Recipe: {} };
   const [committedSteps, setCommittedSteps] = useState(
     edit
       ? Recipe.steps.map((step) => {
-        return {
-          description: step.description,
-          ingredients: step.Ingredients,
-          seconds: step.seconds,
-        };
-      })
-      : [],
+          return {
+            description: step.description,
+            ingredients: step.Ingredients,
+            seconds: step.seconds,
+          };
+        })
+      : []
   );
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState([]);
@@ -28,7 +32,7 @@ function RecipeEditAndDeletePage({ edit }) {
   const [selected, setSelected] = useState(Ingredients[0]);
   const [amountNeeded, setAmountNeeded] = useState(0);
   const [recipeDescription, setRecipeDescription] = useState(
-    edit ? Recipe.description : "",
+    edit ? Recipe.description : ""
   );
   const [recipeName, setRecipeName] = useState(edit ? Recipe.name : "");
 
@@ -44,7 +48,7 @@ function RecipeEditAndDeletePage({ edit }) {
           };
         }),
       },
-      { method: "post", encType: "application/json" },
+      { method: "post", encType: "application/json" }
     );
     navigate("/recipes");
   };
@@ -144,8 +148,8 @@ function RecipeEditAndDeletePage({ edit }) {
                   Ingredients.find(
                     (b) =>
                       b.id ===
-                      Number(e.target.options[e.target.selectedIndex].id),
-                  ),
+                      Number(e.target.options[e.target.selectedIndex].id)
+                  )
                 );
               }}
             >
