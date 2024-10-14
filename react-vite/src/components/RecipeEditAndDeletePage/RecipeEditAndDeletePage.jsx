@@ -16,15 +16,15 @@ function RecipeEditAndDeletePage({ edit }) {
   const [committedSteps, setCommittedSteps] = useState(
     edit
       ? Recipe.steps.map((step) => {
-        return {
-          description: step.description,
-          ingredients: step.Ingredients.map((ingredient) => {
-            return { ...ingredient, amountNeeded: ingredient.amount_needed };
-          }),
-          seconds: step.seconds,
-        };
-      })
-      : [],
+          return {
+            description: step.description,
+            ingredients: step.Ingredients.map((ingredient) => {
+              return { ...ingredient, amountNeeded: ingredient.amount_needed };
+            }),
+            seconds: step.seconds,
+          };
+        })
+      : []
   );
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState([]);
@@ -33,7 +33,7 @@ function RecipeEditAndDeletePage({ edit }) {
   const [selected, setSelected] = useState(Ingredients[0]);
   const [amountNeeded, setAmountNeeded] = useState(0);
   const [recipeDescription, setRecipeDescription] = useState(
-    edit ? Recipe.description : "",
+    edit ? Recipe.description : ""
   );
   const [recipeName, setRecipeName] = useState(edit ? Recipe.name : "");
   const [errors, setErrors] = useState({});
@@ -74,7 +74,7 @@ function RecipeEditAndDeletePage({ edit }) {
           };
         }),
       },
-      { method: "post", encType: "application/json" },
+      { method: "post", encType: "application/json" }
     );
   };
 
@@ -167,8 +167,8 @@ function RecipeEditAndDeletePage({ edit }) {
                       Ingredients.find(
                         (b) =>
                           b.id ===
-                          Number(e.target.options[e.target.selectedIndex].id),
-                      ),
+                          Number(e.target.options[e.target.selectedIndex].id)
+                      )
                     );
                   }}
                 >
@@ -202,6 +202,13 @@ function RecipeEditAndDeletePage({ edit }) {
                     const ingredErr = validate_ingredient();
                     if (ingredErr) {
                       return setErrors({ ...errors, ingredient: ingredErr });
+                    }
+                    const existing = ingredients.find(
+                      (i) => i.id === selected.id
+                    );
+                    if (existing) {
+                      existing.amountNeeded += amountNeeded;
+                      return;
                     }
                     setIngredients([
                       ...ingredients,
