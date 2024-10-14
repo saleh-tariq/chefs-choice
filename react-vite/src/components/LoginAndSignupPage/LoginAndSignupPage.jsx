@@ -3,13 +3,18 @@ import "./LoginAndSignupPage.css";
 import LoginFormPage from "../LoginFormPage";
 import SignupFormPage from "../SignupFormPage";
 import "./LoginAndSignupPage.css";
+import { useSelector } from "react-redux";
 
 function LoginAndSignupPage() {
   const [signup, setSignUp] = useState(false);
   const signupToggle = () => {
     setSignUp(!signup);
   };
-  return (
+  const sessionUser = useSelector((state) => state.session.user);
+  console.log(sessionUser);
+  return sessionUser ? (
+    <h2>loading...</h2>
+  ) : (
     <div>
       {signup ? (
         <>
