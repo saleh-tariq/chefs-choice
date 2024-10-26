@@ -53,6 +53,8 @@ function RecipeEditAndDeletePage({ edit }) {
   const validate_recipe = () => {
     if (!recipeDescription || !recipeName) {
       return "Recipe name and description are required";
+    } else if (recipeName.length > 40) {
+      return "Recipe name cannot exceed 40 characters";
     }
   };
 

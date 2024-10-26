@@ -4,8 +4,9 @@ from flask_login import current_user, login_required
 from app.forms.recipe_form import RecipeForm
 from app.forms.recipe_step_form import RecipeStepForm
 from app.models import Ingredient, Recipe, Step, StepIngredients, db
-
-# from ..forms import RecipeForm
+from app.api.s3 import (
+    upload_file_to_s3, get_unique_filename
+)
 
 recipe_routes = Blueprint("recipes", __name__)
 
@@ -109,8 +110,18 @@ def post_new_recipe():
     if form.validate_on_submit():
         new_recipe = Recipe()
 
-        form.populate_obj(new_recipe)
+        new_recipe.name = form.data["name"]
+        new_recipe.description = form.data["description"]
         new_recipe.user_id = current_user.to_dict()["id"]
+        if form.data["img"]:
+            img = form.data["img"]
+            img.filename = get_unique_filename(img.filename)
+            upload = upload_file_to_s3(img)
+
+            if "url" not in upload:
+                return {"errors": upload}, 502
+            
+            new_recipe.img = upload["url"]
 
         db.session.add(new_recipe)
         db.session.commit()
@@ -179,8 +190,17 @@ def put_recipe(recipe_id):
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
-        form.populate_obj(recipe)
-        recipe.user_id = current_user.to_dict()["id"]
+        recipe.name = form.data["name"]
+        recipe.description = form.data["description"]
+        if form.data["img"]:
+            img = form.data["img"]
+            img.filename = get_unique_filename(img.filename)
+            upload = upload_file_to_s3(img)
+
+            if "url" not in upload:
+                return {"errors": upload}, 502
+            
+            recipe.img = upload["url"]
 
         db.session.add(recipe)
         db.session.commit()
