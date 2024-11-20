@@ -109,15 +109,16 @@ def post_new_recipe():
 
     if form.validate_on_submit():
         new_recipe = Recipe()
-
         new_recipe.name = form.data["name"]
         new_recipe.description = form.data["description"]
         new_recipe.user_id = current_user.to_dict()["id"]
+        print('\n\n\n\n\n\n\n\n wait \n\n\n\n\n\n')
+        print(request.form.to_dict())
         if form.data["img"]:
+            print('\n\n\n\n\n\n\n\n we in the conditional woop \n\n\n\n\n\n')
             img = form.data["img"]
             img.filename = get_unique_filename(img.filename)
             upload = upload_file_to_s3(img)
-
             if "url" not in upload:
                 return {"errors": upload}, 502
             

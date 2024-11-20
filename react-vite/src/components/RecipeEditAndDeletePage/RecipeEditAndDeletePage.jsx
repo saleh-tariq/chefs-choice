@@ -26,6 +26,7 @@ function RecipeEditAndDeletePage({ edit }) {
         })
       : []
   );
+  const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [seconds, setSeconds] = useState(0);
@@ -67,7 +68,7 @@ function RecipeEditAndDeletePage({ edit }) {
     }
     submit(
       {
-        Recipe: { name: recipeName, description: recipeDescription },
+        Recipe: { name: recipeName, description: recipeDescription, image },
         Steps: committedSteps.map((step) => {
           return {
             Ingredients: step.ingredients,
@@ -79,7 +80,9 @@ function RecipeEditAndDeletePage({ edit }) {
       { method: "post", encType: "application/json" }
     );
   };
-
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
   return (
     <div>
       <form
@@ -89,6 +92,7 @@ function RecipeEditAndDeletePage({ edit }) {
           e.preventDefault();
           post();
         }}
+        encType="multipart/form-data"
       >
         <h2>{edit ? "Edit Recipe" : "New Recipe"}</h2>
         {errors.recipe}
@@ -107,6 +111,7 @@ function RecipeEditAndDeletePage({ edit }) {
               value={recipeDescription}
               onInput={(e) => setRecipeDescription(e.target.value)}
             />
+            <input type="file" onInput={(e) => setImage(e.target.files[0])} />
           </div>
 
           <div className="recipe-form-step dark-primary">
