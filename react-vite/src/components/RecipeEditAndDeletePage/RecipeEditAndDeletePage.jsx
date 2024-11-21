@@ -66,23 +66,29 @@ function RecipeEditAndDeletePage({ edit }) {
     if (recipeErr) {
       return setErrors({ ...errors, recipe: recipeErr });
     }
-    submit(
-      {
-        Recipe: { name: recipeName, description: recipeDescription, image },
-        Steps: committedSteps.map((step) => {
-          return {
-            Ingredients: step.ingredients,
-            description: step.description,
-            seconds: step.seconds,
-          };
-        }),
-      },
-      { method: "post", encType: "application/json" }
+    const form = new FormData();
+    if (image) {
+      // const reader = new FileReader();
+      // reader.readAsDataURL(image);
+      // reader.onload = (e) => {
+      form.append("img", image);
+      // };
+    }
+    form.append("name", recipeName);
+    form.append("description", recipeDescription);
+    const stepString = JSON.stringify(
+      committedSteps.map((step) => {
+        return {
+          Ingredients: step.ingredients,
+          description: step.description,
+          seconds: step.seconds,
+        };
+      })
     );
+    form.append("steps", stepString);
+    submit(form, { method: "post", encType: "multipart/form-data" });
   };
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
+  useEffect(() => {}, [image]);
   return (
     <div>
       <form
