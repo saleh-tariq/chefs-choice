@@ -74,18 +74,19 @@ export const router = createBrowserRouter([
           return null;
         },
         action: async ({ request: req, params }) => {
-          const { Recipe, Steps } = await req.json();
+          const data = await req.formData();
+
+          const body = new FormData();
+          body.append("img", data.get("img"));
+          body.append("name", data.get("name"));
+          body.append("description", data.get("description"));
+
           const res = await fetch(`/api/recipes/${params.recipeId}`, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: Recipe.name,
-              description: Recipe.description,
-            }),
+            body,
           });
           const recipe = await res.json();
+          const Steps = JSON.parse(data.get("steps"));
 
           for (let i = 0; i < recipe.steps.length; i++) {
             await fetch("/api/steps/" + recipe.steps[i].id, {

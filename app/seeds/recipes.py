@@ -26,6 +26,7 @@ def seed_recipes():
     sunny = Recipe(
         name="Sunny Side Up Eggs",
         description="Sunny Side Up Eggs LMAOOOO",
+        img='https://www.southernliving.com/thmb/NDuJP6OZAhYDO-3xexTbcdxZGds=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Sunny_Side_Up_Eggs_008-c7f1db520c2a476db6b9e84e60f8c119.jpg',
         user_id=1,
     )
 
@@ -73,6 +74,7 @@ def seed_recipes():
     vegetable_stir_fry = Recipe(
         name="Vegetable Stir-Fry",
         description="A quick and healthy vegetable stir-fry.",
+        img='https://www.budgetbytes.com/wp-content/uploads/2022/03/Easy-Vegetable-Stir-Fry-close.jpg',
         user_id=1,
     )
 
@@ -143,6 +145,7 @@ def seed_recipes():
     spaghetti_aglio_e_olio = Recipe(
         name="Spaghetti Aglio e Olio",
         description="A classic Italian pasta dish with garlic and olive oil.",
+        img='https://www.simplyrecipes.com/thmb/gjS-FSuYnqK3fclkE2fWhYl1VWQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Spaghetti-Aglio-e-Olio-LEAD-2-c8e7e8c6edb04a8691463c6ea8cd4ba1.jpg',
         user_id=1,
     )
 
@@ -220,6 +223,7 @@ def seed_recipes():
     chicken_curry = Recipe(
         name="Chicken Curry",
         description="A flavorful chicken curry with spices.",
+        img='https://slowcookerfoodie.com/wp-content/uploads/2022/03/Spicy-Chicken-Curry-500x500.jpg',
         user_id=1,
     )
 
@@ -294,6 +298,7 @@ def seed_recipes():
     caprese_salad = Recipe(
         name="Caprese Salad",
         description="A fresh salad with tomatoes, mozzarella, and basil.",
+        img="https://downshiftology.com/wp-content/uploads/2019/07/How-to-Make-Caprese-Salad-1.jpg",
         user_id=1,
     )
 
@@ -365,6 +370,7 @@ def seed_recipes():
     omelette = Recipe(
         name="Omelette",
         description="A fluffy omelette with cheese and herbs.",
+        img='https://joyfoodsunshine.com/wp-content/uploads/2022/07/best-omelette-recipe-1-500x500.jpg',
         user_id=1,
     )
 
@@ -423,6 +429,7 @@ def seed_recipes():
     fried_rice = Recipe(
         name="Fried Rice",
         description="Delicious fried rice with vegetables and eggs.",
+        img='https://www.savoryexperiments.com/wp-content/uploads/2022/11/Fried-Rice-9.jpg',
         user_id=1,
     )
 
@@ -489,38 +496,6 @@ def seed_recipes():
         user_id=1,
     )
 
-    ## STEPS
-    caprese_step1 = Step(
-        description="Slice tomatoes and mozzarella cheese.", seconds=120,is_head =1
-    )
-    caprese_step1_ingred1 = StepIngredients(amount_needed=200)
-    caprese_step1_ingred1.ingredient = tomato_ingredient
-    caprese_step1.ingredients.append(caprese_step1_ingred1)
-
-    caprese_step2 = Step(
-        description="Layer tomatoes, mozzarella, and basil on a plate.", seconds=180
-    )
-    caprese_step2_ingred1 = StepIngredients(amount_needed=150)
-    caprese_step2_ingred1.ingredient = mozzarella_ingredient
-    caprese_step2.ingredients.append(caprese_step2_ingred1)
-
-    caprese_step2_ingred2 = StepIngredients(amount_needed=10)
-    caprese_step2_ingred2.ingredient = basil_ingredient
-    caprese_step2.ingredients.append(caprese_step2_ingred2)
-
-    caprese_step3 = Step(description="Drizzle with olive oil and serve.", seconds=30)
-    caprese_step3_ingred1 = StepIngredients(amount_needed=20)
-    caprese_step3_ingred1.ingredient = olive_oil_ingredient
-    caprese_step3.ingredients.append(caprese_step3_ingred1)
-
-    caprese_step1.next_step = caprese_step2
-    caprese_step2.next_step = caprese_step3
-
-    caprese_salad.steps.append(caprese_step1)
-    caprese_salad.steps.append(caprese_step2)
-    caprese_salad.steps.append(caprese_step3)
-
-    db.session.add(caprese_salad)
 
     db.session.commit()
 
