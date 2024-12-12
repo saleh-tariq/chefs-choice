@@ -112,10 +112,7 @@ def post_new_recipe():
         new_recipe.name = form.data["name"]
         new_recipe.description = form.data["description"]
         new_recipe.user_id = current_user.to_dict()["id"]
-        print('\n\n\n\n\n\n\n\n wait \n\n\n\n\n\n')
-        print(request.form.to_dict())
         if form.data["img"]:
-            print('\n\n\n\n\n\n\n\n we in the conditional woop \n\n\n\n\n\n')
             img = form.data["img"]
             img.filename = get_unique_filename(img.filename)
             upload = upload_file_to_s3(img)
@@ -178,7 +175,7 @@ def post_new_step_to_recipe(recipe_id):
 @login_required
 def put_recipe(recipe_id):
     """
-    Edits an existing recipe
+    Edit an existing recipe
     """
     recipe = Recipe.query.get(recipe_id)
     if not recipe:

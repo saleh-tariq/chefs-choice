@@ -20,14 +20,14 @@ function RecipeDetailsPage() {
             onSubmit={(e) => {
               e.preventDefault();
               const confirmDelete = window.confirm(
-                "Are you sure you want to delete this Recipe?",
+                "Are you sure you want to delete this Recipe?"
               );
               if (!confirmDelete) {
                 return;
               }
               submit(
                 { id: recipe.id },
-                { method: "delete", encType: "application/json" },
+                { method: "delete", encType: "application/json" }
               );
             }}
           >
@@ -37,12 +37,13 @@ function RecipeDetailsPage() {
           </form>
         </div>
       </div>
+      <img src={recipe.img} alt="Image" className="recipe-image" />
       <p>
         {recipe.is_available
           ? "ready to make"
           : `unavailable ingredients: ${recipe.missing_ingredients
-            .map((e) => `${e.name}`)
-            .join(", ")}`}
+              .map((e) => `${e.name}`)
+              .join(", ")}`}
       </p>
       <p>{recipe.description}</p>
       <h3>Steps</h3>
@@ -53,7 +54,7 @@ function RecipeDetailsPage() {
               <h4>{`Step #${i + 1}`}</h4>
               <p>{step.description}</p>
               <p>{`Ingredients used: ${step.Ingredients.map(
-                (e) => `${e.name} | ${e.amount_needed}`,
+                (e) => `${e.name} | ${e.amount_needed}`
               ).join(", ")}`}</p>
             </div>
           </>
