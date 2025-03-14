@@ -10,7 +10,7 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     description = db.Column(db.String(4000), nullable=False)
-    img = db.Column(db.String(40))
+    img = db.Column(db.String(400))
     user_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
@@ -65,7 +65,7 @@ class Recipe(db.Model):
             "is_available": self.is_available(),
             "missing_ingredients": self.missing_ingredients(),
         }
-    
+
     def to_dict_advanced(self):
         return {
             **self.to_dict_simple(),
